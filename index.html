@@ -73,67 +73,53 @@ h2 { margin: -30px; }
 
 <!-- VISUALIZATION 1-->
 <!-- IMDB ratings and viewership (in millions) vs. episode # (slider controls seasons) -->
-<section id="viewership">
+<section id="season">
   <div align="center">
     <p>Viewership graph goes here<p>
-    <p><svg id="HSLa" width="440" height="440"></svg></p>
-    
+    <p><svg id="season-graph" width="440" height="440"></svg></p>
+
     <div class="slidecontainer">
-      <input type="range" min="0" max="255" value="128" class="slider" id="slider1">
+      <input type="range" min="1" max="28" value="1" class="slider" id="season-slider">
     </div>
 
     <script>
-    var svg = d3.select("#HSLa");
+    var svg = d3.select("#season-graph");
     var width = svg.width;
     var height = svg.height;
 
-    var objects = [];
-    for (var i=0; i<11; i++) {
-      for (var j=0; j<11; j++) {
-        var obj = { lightness: i*10, saturation: j*10 };
-        objects.push(obj);
-      }
-    }
+    var seasonSlider = document.getElementById("season-slider");
 
-    var hueSlider = document.getElementById("slider1");
+    /* season variable, controlled by slider */
+    var season = 1;
 
-    //variables for hue and opacity, modified by sliders
-    var hue = 128;
-    var opacity = 100;
+    /* add default graph to season */
+    svg.append("text")
+      .attr("id", "season-number")
+      .attr("x", "50%")
+      .attr("y", "50%")
+      .attr("text-anchor", "middle")
+      .text(String(season));
 
-    //initial display
-    showCircles(hue, opacity);
+    /* default display for season = 1 */
+    // visualizeData(season);
 
-    hueSlider.oninput = function () {
-      hue = hueSlider.value;
-      showCircles(hue, opacity);
+    seasonSlider.oninput = function () {
+      season = seasonSlider.value;
+      visualizeData(season);
     };
 
-    function showCircles(hue, opacity) {
-
-      var circles = svg.selectAll("circle").data(objects);
-      var addedCircles = circles.enter().append("circle");
-      var mergedCircles = addedCircles.merge(circles);
-
-      mergedCircles.attr("cx", function (d) {
-        return (d.lightness/10)*40+20;
-      })
-      .attr("cy", function (d) {
-        return (d.saturation/10)*40+20;
-      })
-      .attr("r", 20)
-      .style("stroke", "#eee")
-      .style("fill", function (d) { 
-        return d3.hsl(hue,d.saturation/100,d.lightness/100,opacity)
-      });
+    function visualizeData(season) {
+      svg.select("#season-number")
+      .text(String(season));
     }
+
     </script>
   </div>
 </section>
 
 <!-- VISUALIZATION 2-->
 <!-- Episode analysis -->
-<section id="gender">
+<section id="episode">
   <div align="center">
     <p>Episode analysis goes here<p>
   </div>
