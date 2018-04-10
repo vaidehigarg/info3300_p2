@@ -75,8 +75,7 @@ h2 { margin: -30px; }
 <!-- IMDB ratings and viewership (in millions) vs. episode # (slider controls seasons) -->
 <section id="season">
   <div align="center">
-    <p>Viewership graph goes here<p>
-    <p><svg id="season-graph" width="440" height="440"></svg></p>
+    <p><svg id="season-graph" width="800" height="440"></svg></p>
 
     <div class="slidecontainer">
       <input type="range" min="1" max="28" value="1" class="slider" id="season-slider">
@@ -98,7 +97,7 @@ h2 { margin: -30px; }
       .attr("x", "50%")
       .attr("y", "10%")
       .attr("text-anchor", "middle")
-      .text("Season " + String(season));
+      .text("Episode Viewership and Rating: Season " + String(season));
 
     /* default display for season = 1 */
     // visualizeData(season);
@@ -110,7 +109,7 @@ h2 { margin: -30px; }
 
     function visualizeData(season) {
       svg.select("#season-number")
-      .text("Season " + String(season));
+      .text("Episode Viewership and Rating: Season " + String(season));
     }
 
     </script>
