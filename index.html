@@ -10,11 +10,52 @@
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <style>
-  body { background-color: rgb(255,234,47); font-family: 'Gaegu', sans-serif; font-size: 32px; }
-  section { width: 100%; }
-  h2 { margin: -30px; }
-  #introduction { text-transform: uppercase; letter-spacing: 0.1em; font-weight: bold; }
+body { background-color: rgb(250,205,40); font-family: 'Gaegu', sans-serif; font-size: 32px; }
+section { width: 100%; }
+h2 { margin: -30px; }
+#introduction { text-transform: uppercase; letter-spacing: 0.1em; font-weight: bold; }
 
+/* Slider created with guidance from https://www.w3schools.com/howto/howto_js_rangeslider.asp */
+.slidecontainer {
+    width: 50%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: rgb(2,10,13); /* Background color */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; 0.2 seconds transition on hover */
+    transition: opacity .2s;*/
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1;
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 50px; /* Set a specific slider handle width */
+    height: 50px; /* Slider handle height */
+    border: 0;
+    background: url('donut.png');
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 50px; /* Set a specific slider handle width */
+    height: 50px; /* Slider handle height */
+    border: 0;
+    background: url('donut.png');
+    cursor: pointer; /* Cursor on hover */
+}
 </style>
 </head>
 
@@ -23,9 +64,9 @@
 <!-- HEADER -->
 <section id="introduction">
   <div id="header" align="center">
-        <h5>INFO 3300: Project 2</h6>
-        <h2>The Simpsons Through The Ages</h3>
-        <h5>Vaidehi Garg, Brendan Fox, Jason Kwon</h3>
+    <h5>INFO 3300: Project 2</h6>
+    <h2>The Simpsons Through The Ages</h3>
+    <h5>Vaidehi Garg, Brendan Fox, Jason Kwon</h3>
   </div>  
 </section>
 <!-- END HEADER -->
@@ -35,6 +76,58 @@
 <section id="viewership">
   <div align="center">
     <p>Viewership graph goes here<p>
+    <p><svg id="HSLa" width="440" height="440"></svg></p>
+    
+    <div class="slidecontainer">
+      <input type="range" min="0" max="255" value="128" class="slider" id="slider1">
+    </div>
+
+    <script>
+    var svg = d3.select("#HSLa");
+    var width = svg.width;
+    var height = svg.height;
+
+    var objects = [];
+    for (var i=0; i<11; i++) {
+      for (var j=0; j<11; j++) {
+        var obj = { lightness: i*10, saturation: j*10 };
+        objects.push(obj);
+      }
+    }
+
+    var hueSlider = document.getElementById("slider1");
+
+    //variables for hue and opacity, modified by sliders
+    var hue = 128;
+    var opacity = 100;
+
+    //initial display
+    showCircles(hue, opacity);
+
+    hueSlider.oninput = function () {
+      hue = hueSlider.value;
+      showCircles(hue, opacity);
+    };
+
+    function showCircles(hue, opacity) {
+
+      var circles = svg.selectAll("circle").data(objects);
+      var addedCircles = circles.enter().append("circle");
+      var mergedCircles = addedCircles.merge(circles);
+
+      mergedCircles.attr("cx", function (d) {
+        return (d.lightness/10)*40+20;
+      })
+      .attr("cy", function (d) {
+        return (d.saturation/10)*40+20;
+      })
+      .attr("r", 20)
+      .style("stroke", "#eee")
+      .style("fill", function (d) { 
+        return d3.hsl(hue,d.saturation/100,d.lightness/100,opacity)
+      });
+    }
+    </script>
   </div>
 </section>
 
