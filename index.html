@@ -96,9 +96,9 @@ h2 { margin: -30px; }
     svg.append("text")
       .attr("id", "season-number")
       .attr("x", "50%")
-      .attr("y", "50%")
+      .attr("y", "10%")
       .attr("text-anchor", "middle")
-      .text(String(season));
+      .text("Season " + String(season));
 
     /* default display for season = 1 */
     // visualizeData(season);
@@ -110,7 +110,7 @@ h2 { margin: -30px; }
 
     function visualizeData(season) {
       svg.select("#season-number")
-      .text(String(season));
+      .text("Season " + String(season));
     }
 
     </script>
