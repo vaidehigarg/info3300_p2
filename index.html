@@ -117,11 +117,7 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
         ratings.push([]);
         viewership.push([]);
         episodes.push([]);
-<<<<<<< HEAD
-    //    console.log(episodes);
-=======
         seasons.push([]);
->>>>>>> 17fa40ace8cdb99cd3f59fe661a4a401ab454e8e
       }
 
 
@@ -136,11 +132,6 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
         }
       });
 
-<<<<<<< HEAD
-    //  console.log(ratings);
-    //  console.log(viewership);
-    //  console.log(episodes);
-=======
       console.log(ratings);
       console.log(viewership);
       console.log(episodes);
@@ -149,7 +140,6 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
       var xScale = d3.scaleLinear();
       var yRatingScale = d3.scaleLinear();
       var yViewsScale = d3.scaleLinear();
->>>>>>> 17fa40ace8cdb99cd3f59fe661a4a401ab454e8e
 
       var xAxis = d3.axisBottom();
       var yRatingAxis = d3.axisLeft();
@@ -361,6 +351,30 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
   .defer(d3.csv, "mod-data/simpsons_locations.csv", parseRow)
   .awaitAll(locationsCallback);
 
+  //code below takes info for the season 1 episode; extension to more episodes to come
+  var male = 0 ;
+  var female = 0;
+  var unlabled = 0;
+  var occurrence; //i can't think of a good name for this rigth now
+  characters[0].forEach(function(character){//each character is in once per spoken line
+    !character['gender']  ? unlabled++ : (character['gender'] == 'm' ? male++ : female++);
+    !occurrence[character['name']] ? occurrence[character['name']] = 1 : occurrence[character['name']]++;
+
+  });
+
+  var names = [];
+  for(var char in occurrence) {names.push(char);}
+  names.sort(function(a,b){return occurrence[b]-occurrence[a]});
+
+  var locationOccurrence;
+  locations[0].forEach(function(location){
+    !locationOccurrence[location['name']] ? locationOccurrence[location['name']] = 1 : locationOccurrence[location['name']]++;
+  });
+
+  var locs = [];
+  for(var loc in locationOccurrence) {locs.push(loc);}
+  locs.sort(function(a,b){return locationOccurrence[b]-locationOccurrence[a]});
+
 
 
   function v2callback(error, data){
@@ -378,7 +392,9 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
       //console.log(seasonBuffer[0]['season']);
       if(row['season'] != seasonBuffer[0]['season']){ //if the current episode is a new season, find most watched episode and push it
         seasonBuffer.sort(function(a,b){return b['us_viewers_in_millions'] - a['us_viewers_in_millions']});
+        console.log(seasonBuffer);
         topEpisodes.push(seasonBuffer[0]);
+
         seasonBuffer.length = 0;
 
       }
@@ -396,14 +412,16 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
         .attr("y", "10%")
         .attr("text-anchor", "middle")
         .text("" + element['title']);
-        console.log(element['title']);
+
     })*/
+
   }
 
   function linesCallback(error, data){
     data.forEach(function(row){
       episodes.forEach(function(episode, index){
         if(row['episode_id'] == episode['id']){
+          consle.log("a");
           lines[episode['season']].push(row); //get every line assigned to its episode separating them by season
         }
       });
