@@ -13,12 +13,14 @@
 body { background-color: rgb(250,205,40); font-family: 'Gaegu', sans-serif; font-size: 32px; }
 section { width: 100%; }
 h2 { margin: -30px; }
-svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
+svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
 #introduction { text-transform: uppercase; letter-spacing: 0.1em; font-weight: bold; }
 
 /* Slider created with guidance from https://www.w3schools.com/howto/howto_js_rangeslider.asp */
 .slidecontainer {
     width: 50%; /* Width of the outside container */
+    font-family: 'Gaegu', sans-serif; font-size: 32px;
+    padding-bottom: 50px;
 }
 
 /* The slider itself */
@@ -87,8 +89,9 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
 
     var width = 800;
     var height = 500;
-    var padding = 50;
+    var padding = 75;
     
+    var slideContainer = d3.select(".slidecontainer");
     var seasonSlider = document.getElementById("season-slider");
 
     /* season variable, controlled by slider */
@@ -160,8 +163,8 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
         xScale.domain(d3.extent(episodes[season-1])).range([padding,width-padding]);
         // yRatingScale.domain([0,10]).range([height-padding,2*padding]);
         // yViewsScale.domain([0,35]).range([height-padding,2*padding]);
-        yRatingScale.domain(d3.extent(ratings[season-1])).range([height-padding,2*padding]);
-        yViewsScale.domain(d3.extent(viewership[season-1])).range([height-padding,2*padding]);
+        yRatingScale.domain(d3.extent(ratings[season-1])).range([height-padding,1.25*padding]);
+        yViewsScale.domain(d3.extent(viewership[season-1])).range([height-padding,1.25*padding]);
 
         xAxis.scale(xScale).ticks(episodes[season-1].length);
         yRatingAxis.scale(yRatingScale);
@@ -171,18 +174,55 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
       function initAxis() {
         svg.append("g")
           .attr("class", "x axis")
+          .style("font-size", "16px")
+          .style("font-family", "Gaegu, sans-serif")
           .attr("transform", "translate(" + 0 + "," + (height-padding) + ")")
           .call(xAxis);
 
         svg.append("g")
           .attr("class", "y axis")
+          .style("font-size", "16px")
+          .style("font-family", "Gaegu, sans-serif")
           .attr("transform", "translate(" + padding + "," + 0 + ")")
           .call(yRatingAxis);
 
         svg.append("g")
           .attr("class", "z axis")
+          .style("font-size", "16px")
+          .style("font-family", "Gaegu, sans-serif")
           .attr("transform", "translate(" + (width-padding) + "," + 0 + ")")
           .call(yViewsAxis);
+
+        /* Add x-axis label */
+        svg.append("text")
+          .text("Episode #")
+          .style("text-anchor", "middle")
+          .attr("x", "50%")
+          .attr("y", "95%")
+          .attr("font-size", 24)
+          .attr("font-family", "Gaegu, sans-serif");
+
+        /* Add y-axis-rating label */
+        svg.append("text")
+          .text("IMDb Rating (# stars)")
+          .style("text-anchor", "middle")
+          .attr("x", padding/2.5)
+          .attr("y", height/2)
+          .attr("transform", "rotate (" + 270 + "," + padding/2.5 + "," + height/2 + ")")
+          .style("font-size", 24)
+          .style("font-family", "Gaegu, sans-serif")
+          .style("fill", "rgb(232,70,28)");
+
+        /* Add y-axis-viewership label */
+        svg.append("text")
+          .text("US Viewership (millions)")
+          .style("text-anchor", "middle")
+          .attr("x", width-padding/3.5)
+          .attr("y", height/2)
+          .attr("transform", "rotate (" + 270 + "," + (width-padding/3.5) + "," + (height/2) + ")")
+          .style("font-size", 24)
+          .style("font-family", "Gaegu, sans-serif")
+          .style("fill", "rgb(30,103,180)");
       }
 
       function drawAxis() {
@@ -249,6 +289,13 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
         .style("stroke-width", 2)
         .style("fill", "none");
 
+        slideContainer.append("text")
+          .attr("id", "season-number")
+          .attr("x", "50%")
+          .attr("y", "10%")
+          .attr("text-anchor", "middle")
+          .text("Slide to pick a season (1-27)");
+
         // var circles1 = svg.selectAll("circle").data(seasons[season-1]);
         // var addedCircles1 = circles1.enter().append("circle");
         // var mergedCircles1 = addedCircles1.merge(circles1);
@@ -302,15 +349,17 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
         .style("fill", "none");
       }
     }
-
     </script>
+  </div>
 </section>
 
 <!-- VISUALIZATION 2-->
 <!-- Episode analysis -->
 <section id="episode">
-  <div align="center">
-    <p>Episode analysis goes here<p>
+  <div id="viz2_div" align="center">
+    <svg id="episode-detail" width="1000" height="1000"></svg>
+    <script>
+    </script>
   </div>
 </section>
 
