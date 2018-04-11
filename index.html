@@ -189,15 +189,35 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
       lines[i] = [];
   }
 
+  var characters = new Array(27);
+  for(var i = 0; i < characters.length; i++){
+      characters[i] = [];
+  }
+
+  var locations = new Array(27);
+  for(var i = 0; i < locations.length; i++){
+      locations[i] = [];
+  }
+
+
 
   d3.queue()
   .defer(d3.csv, "mod-data/simpsons_episodes.csv", parseRow)
-  .await(v2callback); //fetch 27 episodes
+  .awaitAll(v2callback); //fetch 27 episodes
 
 
   d3.queue()
   .defer(d3.csv, "mod-data/simpsons_script_lines.csv", parseRow)
-  .await(linesCallback); //get the lines, need these for data on characters/locations
+  .awaitAll(linesCallback); //get the lines, need these for data on characters/locations
+
+  d3.queue()
+  .defer(d3.csv, "mod-data/simpsons_characters.csv", parseRow)
+  .awaitAll(charactersCallback);
+
+  d3.queue()
+  .defer(d3.csv, "mod-data/simpsons_locations.csv", parseRow)
+  .awaitAll(locationsCallback);
+
 
 
   function v2callback(error, data){
@@ -246,6 +266,37 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
       });
     });
       console.log(lines);
+  }
+
+  function charactersCallback(error, data){
+    //console.log(lines);
+    data.forEach(function(row){
+      lines.forEach(function(episode, index){//lines is an array of arrays, each of which represents one episode
+    //    console.log(episode);
+        episode.forEach(function(line){
+        //  console.log(line);
+          if(row['id']==line['character_id']){
+            characters[episode['season']].push(row);
+          }
+        //  console.log("a");
+        });
+      });
+    });
+  //  console.log(characters);
+  }
+
+  function locationsCallback(error, data){
+    data.forEach(function(row){
+      lines.forEach(function(episode, index){
+        episode.forEach(function(line){
+          if(row['id'] == line['location_id']){
+            locations[episode['season']].push(row);
+          }
+
+        });
+      });
+    });
+    //console.log(locations);
   }
   </script>
 </section>
