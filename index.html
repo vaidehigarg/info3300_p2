@@ -39,7 +39,7 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
     opacity: 1;
 }
 
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
@@ -68,7 +68,7 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
     <h5>INFO 3300: Project 2</h6>
     <h2>The Simpsons Through The Ages</h3>
     <h5>Vaidehi Garg, Brendan Fox, Jason Kwon</h3>
-  </div>  
+  </div>
 </section>
 <!-- END HEADER -->
 
@@ -88,7 +88,7 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
     var width = 800;
     var height = 440;
     var padding = 50;
-    
+
     var seasonSlider = document.getElementById("season-slider");
 
     /* season variable, controlled by slider */
@@ -177,8 +177,57 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
 <!-- Episode analysis -->
 <section id="episode">
   <div align="center">
-    <p>Episode analysis goes here<p>
+    <svg id = "episode-analysis" width = "900" height = "400">
+
+    </svg>
   </div>
+  <script>
+  var episodes;
+  d3.queue()
+  .defer(d3.csv, "mod-data/simpsons_episodes.csv", parseRow)
+  .await(v2callback); //fetch 27 episodes
+
+
+  d3.queue()
+  .defer(d3.csv, "mod-data/simpsons_locations.csv", parseRow)
+  .await(locationCallback);
+
+  function v2callback(error, data){
+    if (error) { console.log(error); }
+    var topEpisodes = [];
+    var seasonBuffer = [];
+    var svg = d3.select("#episode-analysis");
+    data.forEach(function(row){//this works because the data is sorted by season, ie each season comes in a block
+      if(seasonBuffer.length == 0){ //makes sure there is always an episode to look at
+        seasonBuffer.push(row);
+        return;
+      }
+      //console.log(topEpisodes.length);
+    //  console.log(row['season']);
+      //console.log(seasonBuffer[0]['season']);
+      if(row['season'] != seasonBuffer[0]['season']){ //if the current episode is a new season, find most watched episode and push it
+        seasonBuffer.sort(function(a,b){return b['us_viewers_in_millions'] - a['us_viewers_in_millions']});
+        topEpisodes.push(seasonBuffer[0]);
+        seasonBuffer.length = 0;
+
+      }
+      else{
+        seasonBuffer.push(row);
+
+      }
+      episodes = topEpisodes;
+    });
+    /*topEpisodes.forEach(function(element){ //primarily for test purposes
+      svg.append("text")
+        .attr("id", "season-")
+        .attr("x", "50%")
+        .attr("y", "10%")
+        .attr("text-anchor", "middle")
+        .text("" + element['title']);
+        console.log(element['title']);
+    })*/
+  }
+  </script>
 </section>
 
 </body>
