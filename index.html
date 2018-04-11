@@ -110,13 +110,13 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
     function callback (error, data) {
 
       if (error) { console.log(error); }
-      console.log(data);
+  //    console.log(data);
 
       for (var i=0; i<28; i++) {
         ratings.push([]);
         viewership.push([]);
         episodes.push([]);
-        console.log(episodes);
+    //    console.log(episodes);
       }
 
       data.forEach(function(d, i) {
@@ -126,9 +126,9 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
         episodes[season_num-1].push(Number(d.number_in_season));
       });
 
-      console.log(ratings);
-      console.log(viewership);
-      console.log(episodes);
+    //  console.log(ratings);
+    //  console.log(viewership);
+    //  console.log(episodes);
 
       /* default display for season = 1 */
       svg.append("text")
@@ -182,15 +182,23 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
     </svg>
   </div>
   <script>
+
   var episodes;
+  var lines = new Array(27);
+  for(var i = 0; i < lines.length; i++){
+      lines[i] = [];
+  }
+
+
   d3.queue()
   .defer(d3.csv, "mod-data/simpsons_episodes.csv", parseRow)
   .await(v2callback); //fetch 27 episodes
 
 
   d3.queue()
-  .defer(d3.csv, "mod-data/simpsons_locations.csv", parseRow)
-  .await(locationCallback);
+  .defer(d3.csv, "mod-data/simpsons_script_lines.csv", parseRow)
+  .await(linesCallback); //get the lines, need these for data on characters/locations
+
 
   function v2callback(error, data){
     if (error) { console.log(error); }
@@ -215,8 +223,9 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
         seasonBuffer.push(row);
 
       }
-      episodes = topEpisodes;
+
     });
+    episodes = topEpisodes;
     /*topEpisodes.forEach(function(element){ //primarily for test purposes
       svg.append("text")
         .attr("id", "season-")
@@ -226,6 +235,17 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
         .text("" + element['title']);
         console.log(element['title']);
     })*/
+  }
+
+  function linesCallback(error, data){
+    data.forEach(function(row){
+      episodes.forEach(function(episode, index){
+        if(row['episode_id'] == episode['id']){
+          lines[episode['season']].push(row); //get every line assigned to its episode separating them by season
+        }
+      });
+    });
+      console.log(lines);
   }
   </script>
 </section>
