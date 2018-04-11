@@ -13,6 +13,7 @@
 body { background-color: rgb(250,205,40); font-family: 'Gaegu', sans-serif; font-size: 32px; }
 section { width: 100%; }
 h2 { margin: -30px; }
+svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
 #introduction { text-transform: uppercase; letter-spacing: 0.1em; font-weight: bold; }
 
 /* Slider created with guidance from https://www.w3schools.com/howto/howto_js_rangeslider.asp */
@@ -73,19 +74,27 @@ h2 { margin: -30px; }
 
 <!-- VISUALIZATION 1-->
 <!-- IMDB ratings and viewership (in millions) vs. episode # (slider controls seasons) -->
-<section id="season">
-  <div align="center">
-    <p><svg id="season-graph" width="800" height="440"></svg></p>
+<section id="viz1_section">
+  <div id="viz1_div" align="center">
+    <svg id="season-graph" width="800" height="440"></svg>
 
     <div class="slidecontainer">
-      <input type="range" min="1" max="28" value="1" class="slider" id="season-slider">
+      <input type="range" min="1" max="27" value="1" class="slider" id="season-slider">
     </div>
 
     <script>
-    var svg = d3.select("#season-graph");
-    var width = svg.width;
-    var height = svg.height;
+    var width = 800;
+    var height = 440;
+    var padding = 50;
 
+    var div = d3.select("#viz1_div")
+    .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("id", "season-graph")
+
+    var svg = d3.select("#season-graph");
+    
     var seasonSlider = document.getElementById("season-slider");
 
     /* season variable, controlled by slider */
@@ -96,16 +105,35 @@ h2 { margin: -30px; }
     .defer(d3.csv, "mod-data/simpsons_episodes.csv", parseRow)
     .await(callback);
 
-    var episodeData;
-
     var parseRow = function (row) {
       return row;
     }
 
+    episodes = [];
+    ratings = [];
+    viewership = [];
+
     function callback (error, data) {
+
       if (error) { console.log(error); }
       console.log(data);
-      console.log("everything ran");
+
+      for (var i=0; i<28; i++) {
+        ratings.push([]);
+        viewership.push([]);
+      }
+
+      data.forEach(function(d, i) {
+        season_num = d.season;
+        if (season_num < 29) {
+          ratings[season_num-1].push(Number(d.imdb_rating));
+          viewership[season_num-1].push(Number(d.us_viewers_in_millions));
+          episodes.push(Number());
+        }
+      });
+
+      console.log(ratings);
+      console.log(viewership);
 
       /* default display for season = 1 */
       svg.append("text")
@@ -115,19 +143,40 @@ h2 { margin: -30px; }
         .attr("text-anchor", "middle")
         .text("Episode Viewership and Rating: Season " + String(season));
 
+      var xScale = d3.scaleLinear()
+      .domain(d3.extent(episodes[season]))
+      .range([padding,width-padding]);
+
+      var yRatingScale = d3.scaleLinear()
+      .domain(d3.extent(ratings[season]))
+      .range([height-padding,padding]);
+
+      var yViewsScale = d3.scaleLinear()
+      .domain(d3.extent(viewership[season]))
+      .range([height-padding,padding]);
+
+      var xScale = svg.append("g").call(d3.axisBottom(xScale))
+      .attr("transform", "translate(" + 0 + "," + (height-padding) + ")");
+
+      var yRatingAxis = svg.append("g").call(d3.axisLeft(yRatingScale))
+      .attr("transform", "translate(" + padding + "," + 0 + ")");
+
+      var yViewsAxis = svg.append("g").call(d3.axisRight(yViewsScale))
+      .attr("transform", "translate(" + (width-padding) + "," + 0 + ")");
+
       seasonSlider.oninput = function () {
-        season = seasonSlider.value;
-        visualizeData(season);
+        season = Number(seasonSlider.value);
+        redraw(season);
       };
     }
 
-    function visualizeData(season) {
+    function redraw(season) {
       svg.select("#season-number")
       .text("Episode Viewership and Rating: Season " + String(season));
+
     }
 
     </script>
-  </div>
 </section>
 
 <!-- VISUALIZATION 2-->
