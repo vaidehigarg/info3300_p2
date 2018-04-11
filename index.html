@@ -363,7 +363,9 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
         var mergedCircles2 = addedCircles2.merge(circles2);
 
         mergedCircles1.data(seasons[season-1])
-        .transition(t)
+        .transition()
+        .duration(0)
+        .delay(400)
         .attr("id", "ratings_points")
         .attr("cx", function (d) { return xScale(d.number_in_season) })
         .attr("cy", function (d) { return yRatingScale(d.imdb_rating) })
@@ -371,7 +373,9 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
         .style("fill", "rgb(232,70,28)");
 
         mergedCircles2.data(seasons[season-1])
-        .transition(t)
+        .transition()
+        .duration(0)
+        .delay(400)
         .attr("id", "views_points")
         .attr("cx", function (d) { return xScale(d.number_in_season) })
         .attr("cy", function (d) { return yViewsScale(d.us_viewers_in_millions) })
