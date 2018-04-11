@@ -158,12 +158,14 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
 
       function setScale() {
         xScale.domain(d3.extent(episodes[season-1])).range([padding,width-padding]);
+        // yRatingScale.domain([0,10]).range([height-padding,2*padding]);
+        // yViewsScale.domain([0,35]).range([height-padding,2*padding]);
         yRatingScale.domain(d3.extent(ratings[season-1])).range([height-padding,2*padding]);
         yViewsScale.domain(d3.extent(viewership[season-1])).range([height-padding,2*padding]);
 
         xAxis.scale(xScale).ticks(episodes[season-1].length);
-        yRatingAxis.scale(yRatingScale).ticks(10);
-        yViewsAxis.scale(yViewsScale).ticks(10);
+        yRatingAxis.scale(yRatingScale);
+        yViewsAxis.scale(yViewsScale);
       }
 
       function initAxis() {
@@ -223,21 +225,25 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
           .attr("text-anchor", "middle")
           .text("Episode Viewership and Rating: Season " + String(season));
 
-        var ratingLineGenerator = d3.area()
+        var ratingLineGenerator = d3.line()
         .x(d => xScale(d.number_in_season))
-        .y(d => yRatingScale(d.imdb_rating));
+        .y(d => yRatingScale(d.imdb_rating))
+        .curve(d3.curveBasis);
 
-        svg.append("path")
+        var viewLineGenerator = d3.line()
+        .x(d => xScale(d.number_in_season))
+        .y(d => yViewsScale(d.us_viewers_in_millions))
+        .curve(d3.curveBasis);
+
+        var ratingLine = svg.append("path")
+        .attr("id", "ratings")
         .attr("d", ratingLineGenerator(seasons[season-1]))
         .style("stroke", "rgb(232,70,28)")
         .style("stroke-width", 2)
         .style("fill", "none");
 
-        var viewLineGenerator = d3.area()
-        .x(d => xScale(d.number_in_season))
-        .y(d => yViewsScale(d.us_viewers_in_millions));
-
-        svg.append("path")
+        var viewLine = svg.append("path")
+        .attr("id", "views")
         .attr("d", viewLineGenerator(seasons[season-1]))
         .style("stroke", "rgb(30,103,180)")
         .style("stroke-width", 2)
@@ -265,8 +271,35 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
       }
 
       function drawGraph() {
+        var t = d3.transition()
+        .duration(500)
+
         svg.select("#season-number")
-        .text("Episode Viewership and Rating: Season " + String(season));
+        .text("Episode Viewership and Rating: Season " + String(season))
+        .transition(t);
+
+        var ratingLineGenerator = d3.line()
+        .x(d => xScale(d.number_in_season))
+        .y(d => yRatingScale(d.imdb_rating))
+        .curve(d3.curveBasis);
+
+        var viewLineGenerator = d3.line()
+        .x(d => xScale(d.number_in_season))
+        .y(d => yViewsScale(d.us_viewers_in_millions))
+        .curve(d3.curveBasis);
+
+        var newRatingLine = svg.selectAll("#ratings").transition(t)
+        .attr("d", ratingLineGenerator(seasons[season-1]))
+        .style("stroke", "rgb(232,70,28)")
+        .style("stroke-width", 2)
+        .style("fill", "none");
+
+        var newViewLine = svg.selectAll("#views").transition(t)
+        .attr("id", "views")
+        .attr("d", viewLineGenerator(seasons[season-1]))
+        .style("stroke", "rgb(30,103,180)")
+        .style("stroke-width", 2)
+        .style("fill", "none");
       }
     }
 
