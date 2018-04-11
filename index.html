@@ -27,11 +27,11 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
     appearance: none;
     width: 100%; /* Full-width */
     height: 25px; /* Specified height */
-    background: rgb(2,10,13); /* Background color */
+    background: rgb(60,53,14); /* Background color */
     outline: none; /* Remove outline */
     opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s; 0.2 seconds transition on hover */
-    transition: opacity .2s;*/
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
 }
 
 /* Mouse-over effects */
@@ -76,17 +76,17 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
 <!-- IMDB ratings and viewership (in millions) vs. episode # (slider controls seasons) -->
 <section id="viz1_section">
   <div id="viz1_div" align="center">
-    <svg id="season-graph" width="800" height="440"></svg>
+    <svg id="season-graph" width="800" height="500"></svg>
 
     <div class="slidecontainer">
-      <input type="range" min="1" max="28" value="1" class="slider" id="season-slider">
+      <input type="range" min="1" max="27" value="1" class="slider" id="season-slider">
     </div>
 
     <script>
     var svg = d3.select("#season-graph");
 
     var width = 800;
-    var height = 440;
+    var height = 500;
     var padding = 50;
 
     var seasonSlider = document.getElementById("season-slider");
@@ -106,68 +106,211 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
     ratings = [];
     viewership = [];
     episodes = [];
+    seasons = [];
 
     function callback (error, data) {
 
       if (error) { console.log(error); }
   //    console.log(data);
 
-      for (var i=0; i<28; i++) {
+      for (var i=0; i<27; i++) {
         ratings.push([]);
         viewership.push([]);
         episodes.push([]);
+<<<<<<< HEAD
     //    console.log(episodes);
+=======
+        seasons.push([]);
+>>>>>>> 17fa40ace8cdb99cd3f59fe661a4a401ab454e8e
       }
+
 
       data.forEach(function(d, i) {
         season_num = d.season;
-        ratings[season_num-1].push(Number(d.imdb_rating));
-        viewership[season_num-1].push(Number(d.us_viewers_in_millions));
-        episodes[season_num-1].push(Number(d.number_in_season));
+
+        if (season_num < 28) {
+          ratings[season_num-1].push(Number(d.imdb_rating));
+          viewership[season_num-1].push(Number(d.us_viewers_in_millions));
+          episodes[season_num-1].push(Number(d.number_in_season));
+          seasons[season_num-1].push(d);
+        }
       });
 
+<<<<<<< HEAD
     //  console.log(ratings);
     //  console.log(viewership);
     //  console.log(episodes);
+=======
+      console.log(ratings);
+      console.log(viewership);
+      console.log(episodes);
+      console.log(seasons);
 
-      /* default display for season = 1 */
-      svg.append("text")
-        .attr("id", "season-number")
-        .attr("x", "50%")
-        .attr("y", "10%")
-        .attr("text-anchor", "middle")
-        .text("Episode Viewership and Rating: Season " + String(season));
+      var xScale = d3.scaleLinear();
+      var yRatingScale = d3.scaleLinear();
+      var yViewsScale = d3.scaleLinear();
+>>>>>>> 17fa40ace8cdb99cd3f59fe661a4a401ab454e8e
 
-      var xScale = d3.scaleLinear()
-      .domain(d3.extent(episodes[season-1]))
-      .range([padding,width-padding]);
+      var xAxis = d3.axisBottom();
+      var yRatingAxis = d3.axisLeft();
+      var yViewsAxis = d3.axisRight();
 
-      var yRatingScale = d3.scaleLinear()
-      .domain(d3.extent(ratings[season-1]))
-      .range([height-padding,padding]);
-
-      var yViewsScale = d3.scaleLinear()
-      .domain(d3.extent(viewership[season-1]))
-      .range([height-padding,padding]);
-
-      var xScale = svg.append("g").call(d3.axisBottom(xScale))
-      .attr("transform", "translate(" + 0 + "," + (height-padding) + ")");
-
-      var yRatingAxis = svg.append("g").call(d3.axisLeft(yRatingScale))
-      .attr("transform", "translate(" + padding + "," + 0 + ")");
-
-      var yViewsAxis = svg.append("g").call(d3.axisRight(yViewsScale))
-      .attr("transform", "translate(" + (width-padding) + "," + 0 + ")");
+      setScale();
+      initAxis();
+      initGraph();
 
       seasonSlider.oninput = function () {
         season = Number(seasonSlider.value);
-        redraw(season);
+        setScale();
+        drawAxis();
+        drawGraph();
       };
-    }
 
-    function redraw(season) {
-      svg.select("#season-number")
-      .text("Episode Viewership and Rating: Season " + String(season));
+      function setScale() {
+        xScale.domain(d3.extent(episodes[season-1])).range([padding,width-padding]);
+        // yRatingScale.domain([0,10]).range([height-padding,2*padding]);
+        // yViewsScale.domain([0,35]).range([height-padding,2*padding]);
+        yRatingScale.domain(d3.extent(ratings[season-1])).range([height-padding,2*padding]);
+        yViewsScale.domain(d3.extent(viewership[season-1])).range([height-padding,2*padding]);
+
+        xAxis.scale(xScale).ticks(episodes[season-1].length);
+        yRatingAxis.scale(yRatingScale);
+        yViewsAxis.scale(yViewsScale);
+      }
+
+      function initAxis() {
+        svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(" + 0 + "," + (height-padding) + ")")
+          .call(xAxis);
+
+        svg.append("g")
+          .attr("class", "y axis")
+          .attr("transform", "translate(" + padding + "," + 0 + ")")
+          .call(yRatingAxis);
+
+        svg.append("g")
+          .attr("class", "z axis")
+          .attr("transform", "translate(" + (width-padding) + "," + 0 + ")")
+          .call(yViewsAxis);
+      }
+
+      function drawAxis() {
+        var t = d3.transition()
+        .duration(500)
+
+        var x = svg.selectAll(".x")
+        .data(["dummy"]);
+
+        var newX = x.enter().append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(" + 0 + "," + (height-padding) + ")");
+
+        x.merge(newX).transition(t).call(xAxis);
+
+        var y = svg.selectAll(".y")
+        .data(["dummy"]);
+
+        var newRating = y.enter().append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(" + padding + "," + 0 + ")");
+
+        y.merge(newRating).transition(t).call(yRatingAxis);
+
+        var z = svg.selectAll(".z")
+        .data(["dummy"]);
+
+        var newViews = z.enter().append("g")
+        .attr("class", "z axis")
+        .attr("transform", "translate(" + (width-padding) + "," + 0 + ")");
+
+        z.merge(newViews).transition(t).call(yViewsAxis);
+      }
+
+      function initGraph() {
+        svg.append("text")
+          .attr("id", "season-number")
+          .attr("x", "50%")
+          .attr("y", "10%")
+          .attr("text-anchor", "middle")
+          .text("Episode Viewership and Rating: Season " + String(season));
+
+        var ratingLineGenerator = d3.line()
+        .x(d => xScale(d.number_in_season))
+        .y(d => yRatingScale(d.imdb_rating))
+        .curve(d3.curveBasis);
+
+        var viewLineGenerator = d3.line()
+        .x(d => xScale(d.number_in_season))
+        .y(d => yViewsScale(d.us_viewers_in_millions))
+        .curve(d3.curveBasis);
+
+        var ratingLine = svg.append("path")
+        .attr("id", "ratings")
+        .attr("d", ratingLineGenerator(seasons[season-1]))
+        .style("stroke", "rgb(232,70,28)")
+        .style("stroke-width", 2)
+        .style("fill", "none");
+
+        var viewLine = svg.append("path")
+        .attr("id", "views")
+        .attr("d", viewLineGenerator(seasons[season-1]))
+        .style("stroke", "rgb(30,103,180)")
+        .style("stroke-width", 2)
+        .style("fill", "none");
+
+        // var circles1 = svg.selectAll("circle").data(seasons[season-1]);
+        // var addedCircles1 = circles1.enter().append("circle");
+        // var mergedCircles1 = addedCircles1.merge(circles1);
+
+        // var circles2 = svg.selectAll("circle").data(seasons[season-1]);
+        // var addedCircles2 = circles2.enter().append("circle");
+        // var mergedCircles2 = addedCircles2.merge(circles2);
+
+        // mergedCircles1
+        // .attr("cx", function (d) { return xScale(d.number_in_season) })
+        // .attr("cy", function (d) { return yRatingScale(d.imdb_rating) })
+        // .attr("r", 3)
+        // .style("fill", "rgb(232,70,28)");
+
+        // mergedCircles2
+        // .attr("cx", function (d) { return xScale(d.number_in_season) })
+        // .attr("cy", function (d) { return yRatingScale(d.us_viewers_in_millions) })
+        // .attr("r", 3)
+        // .style("fill", "rgb(30,103,180)");
+      }
+
+      function drawGraph() {
+        var t = d3.transition()
+        .duration(500)
+
+        svg.select("#season-number")
+        .text("Episode Viewership and Rating: Season " + String(season))
+        .transition(t);
+
+        var ratingLineGenerator = d3.line()
+        .x(d => xScale(d.number_in_season))
+        .y(d => yRatingScale(d.imdb_rating))
+        .curve(d3.curveBasis);
+
+        var viewLineGenerator = d3.line()
+        .x(d => xScale(d.number_in_season))
+        .y(d => yViewsScale(d.us_viewers_in_millions))
+        .curve(d3.curveBasis);
+
+        var newRatingLine = svg.selectAll("#ratings").transition(t)
+        .attr("d", ratingLineGenerator(seasons[season-1]))
+        .style("stroke", "rgb(232,70,28)")
+        .style("stroke-width", 2)
+        .style("fill", "none");
+
+        var newViewLine = svg.selectAll("#views").transition(t)
+        .attr("id", "views")
+        .attr("d", viewLineGenerator(seasons[season-1]))
+        .style("stroke", "rgb(30,103,180)")
+        .style("stroke-width", 2)
+        .style("fill", "none");
+      }
     }
 
     </script>
