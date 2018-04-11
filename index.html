@@ -79,21 +79,15 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
     <svg id="season-graph" width="800" height="440"></svg>
 
     <div class="slidecontainer">
-      <input type="range" min="1" max="27" value="1" class="slider" id="season-slider">
+      <input type="range" min="1" max="28" value="1" class="slider" id="season-slider">
     </div>
 
     <script>
+    var svg = d3.select("#season-graph");
+
     var width = 800;
     var height = 440;
     var padding = 50;
-
-    var div = d3.select("#viz1_div")
-    .append("svg")
-      .attr("width", width)
-      .attr("height", height)
-      .attr("id", "season-graph")
-
-    var svg = d3.select("#season-graph");
     
     var seasonSlider = document.getElementById("season-slider");
 
@@ -109,9 +103,9 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
       return row;
     }
 
-    episodes = [];
     ratings = [];
     viewership = [];
+    episodes = [];
 
     function callback (error, data) {
 
@@ -121,19 +115,20 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
       for (var i=0; i<28; i++) {
         ratings.push([]);
         viewership.push([]);
+        episodes.push([]);
+        console.log(episodes);
       }
 
       data.forEach(function(d, i) {
         season_num = d.season;
-        if (season_num < 29) {
-          ratings[season_num-1].push(Number(d.imdb_rating));
-          viewership[season_num-1].push(Number(d.us_viewers_in_millions));
-          episodes.push(Number());
-        }
+        ratings[season_num-1].push(Number(d.imdb_rating));
+        viewership[season_num-1].push(Number(d.us_viewers_in_millions));
+        episodes[season_num-1].push(Number(d.number_in_season));
       });
 
       console.log(ratings);
       console.log(viewership);
+      console.log(episodes);
 
       /* default display for season = 1 */
       svg.append("text")
@@ -144,15 +139,15 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
         .text("Episode Viewership and Rating: Season " + String(season));
 
       var xScale = d3.scaleLinear()
-      .domain(d3.extent(episodes[season]))
+      .domain(d3.extent(episodes[season-1]))
       .range([padding,width-padding]);
 
       var yRatingScale = d3.scaleLinear()
-      .domain(d3.extent(ratings[season]))
+      .domain(d3.extent(ratings[season-1]))
       .range([height-padding,padding]);
 
       var yViewsScale = d3.scaleLinear()
-      .domain(d3.extent(viewership[season]))
+      .domain(d3.extent(viewership[season-1]))
       .range([height-padding,padding]);
 
       var xScale = svg.append("g").call(d3.axisBottom(xScale))
@@ -173,7 +168,6 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px;}
     function redraw(season) {
       svg.select("#season-number")
       .text("Episode Viewership and Rating: Season " + String(season));
-
     }
 
     </script>
