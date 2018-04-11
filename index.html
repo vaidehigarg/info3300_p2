@@ -91,30 +91,21 @@ h2 { margin: -30px; }
     /* season variable, controlled by slider */
     var season = 1;
 
-    /* import data */
-    d3.queue()
-    .defer(d3.csv, "mod-data/simpsons_episodes.csv", parseRow)
-    .await(callback);
+    /* add default graph to season */
+    svg.append("text")
+      .attr("id", "season-number")
+      .attr("x", "50%")
+      .attr("y", "10%")
+      .attr("text-anchor", "middle")
+      .text("Episode Viewership and Rating: Season " + String(season));
 
-    var episodeData;
+    /* default display for season = 1 */
+    // visualizeData(season);
 
-    var parseRow = function (row) {
-      return row;
-    }
-
-    function callback (error, data) {
-      if (error) { console.log(error); }
-      console.log(data);
-      console.log("everything ran");
-
-      /* default display for season = 1 */
-      svg.append("text")
-        .attr("id", "season-number")
-        .attr("x", "50%")
-        .attr("y", "10%")
-        .attr("text-anchor", "middle")
-        .text("Episode Viewership and Rating: Season " + String(season));
-    }
+    seasonSlider.oninput = function () {
+      season = seasonSlider.value;
+      visualizeData(season);
+    };
 
     function visualizeData(season) {
       svg.select("#season-number")
