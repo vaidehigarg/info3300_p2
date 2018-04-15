@@ -37,14 +37,23 @@
 
     <div id="episode-div">
       <div align="center" class="ep-title-div"></div>
-      <input type="image" src="images/point-left.png" class="left-button" id="previous" title="Previous Episode"/>
-      <input type="image" src="images/point-right.png" class="right-button" id="next" title="Next Episode"/>
-      <div align="center" class="ep-image-div"></div>
+      <input type="image" width="12%" src="images/point-left.png" class="left-button" id="previous" title="Previous Episode"/>
+      <input type="image" width="12%" src="images/point-right.png" class="right-button" id="next" title="Next Episode"/>
+      <div align="center" class="ep-image-div"><img width="100%" height="auto" max-width="40%"></div>
       <div align="center" class="ep-link-div"></div>
       <div id="ep-data-div">
-        <div class="ep-location-div"></div>
-        <div class="ep-gender-div"></div>
-        <div class="ep-character-div"></div>
+        <div class="ep-location-div">
+          <p style="font-size: 0.9em">Where'd this episode take place?</p>
+          <svg id="ep-location-svg" width="95%" height="500px"></svg>
+        </div>
+        <div class="ep-gender-div">
+          <p style="font-size: 0.9em">Is this episode gender balanced?</p>
+          <svg id="ep-gender-svg" width="95%" height="500px"></svg>
+        </div>
+        <div class="ep-character-div">
+          <p style="font-size: 0.9em">Who's in this episode?</p>
+          <svg id="ep-character-svg" width="95%" height="500px"></svg>
+        </div>
       </div>
     </div>
 

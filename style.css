@@ -1,7 +1,7 @@
 body { 
   background-color: rgb(250,205,40); 
   font-family: 'Gaegu', 
-  sans-serif; font-size: 32px; 
+  sans-serif; font-size: 2em; 
 }
 
 section { 
@@ -9,17 +9,17 @@ section {
 }
 
 .page-title { 
-  margin: -30px; 
+  margin: -1.5%; 
 }
 
 svg { 
   border: solid #000000 1px;
-  margin: 10px 10px 10px 10px;
+  margin: 0.5% 0.5% 0.5% 0.5%;
 }
 
 div {
   /*border: solid #000000 1px;*/
-  padding: 10px 0px 10px 0px;
+  padding: 0.75% 0px 0.75% 0px;
 }
 
 .introduction { 
@@ -29,14 +29,14 @@ div {
 }
 
 .end-section-div {
-  height: 100px;
+  height: 50px;
 }
 
 /* CSS for slider */
 /* Slider created with guidance from https://www.w3schools.com/howto/howto_js_rangeslider.asp */
 .slidecontainer {
   width: 50%; /* Width of the outside container */
-  font-family: 'Gaegu', sans-serif; font-size: 32px;
+  font-family: 'Gaegu', sans-serif;
   padding-bottom: 50px;
   margin: auto;
   text-align: center;
@@ -81,8 +81,8 @@ div {
 
 .left-button {
   float: left;
-  padding: 20px 80px;
-  margin: 5px 5px;
+  padding: 5% 5%;/*20px 80px;*/
+  /*margin: 0.25% 0.25%;*/
   opacity: 0.6;
   transition: 0.1s;
   cursor: pointer;
@@ -98,8 +98,8 @@ div {
 
 .right-button {
   float: right;
-  padding: 20px 80px;
-  margin: 5px 5px;  
+  padding: 5% 5%;
+  /*margin: 0.25% 0.25%;  */
   opacity: 0.6;
   transition: 0.1s;
   cursor: pointer;
@@ -115,22 +115,17 @@ div {
 
 .ep-title-div {
   margin: auto;
-  width: 1000px;
+  width: 80%;
   text-align: center;
   /*border: 1px solid black;*/
 }
 
 .ep-image-div {
   margin: auto;
-  width: 750px;
+  width: 50%;
   height: auto;
   display: block;
   text-align: center;
-}
-
-.ep-data-div {
-  border: 1px solid black;
-  /*display: inline;*/
 }
 
 .ep-location-div {

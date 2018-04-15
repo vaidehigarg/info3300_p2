@@ -123,21 +123,21 @@ function callback (error, data) {
   function initAxis() {
     svg.append("g")
       .attr("class", "x axis")
-      .style("font-size", "16px")
+      .style("font-size", "0.5em")
       .style("font-family", "Gaegu, sans-serif")
       .attr("transform", "translate(" + 0 + "," + (height-padding) + ")")
       .call(xAxis);
 
     svg.append("g")
       .attr("class", "y axis")
-      .style("font-size", "16px")
+      .style("font-size", "0.5em")
       .style("font-family", "Gaegu, sans-serif")
       .attr("transform", "translate(" + padding + "," + 0 + ")")
       .call(yRatingAxis);
 
     svg.append("g")
       .attr("class", "z axis")
-      .style("font-size", "16px")
+      .style("font-size", "0.5em")
       .style("font-family", "Gaegu, sans-serif")
       .attr("transform", "translate(" + (width-padding) + "," + 0 + ")")
       .call(yViewsAxis);
@@ -148,7 +148,7 @@ function callback (error, data) {
       .style("text-anchor", "middle")
       .attr("x", "50%")
       .attr("y", "95%")
-      .attr("font-size", 24)
+      .attr("font-size", "0.8em")
       .attr("font-family", "Gaegu, sans-serif");
 
     /* Add y-axis-rating label */
@@ -158,7 +158,7 @@ function callback (error, data) {
       .attr("x", padding/2.5)
       .attr("y", height/2)
       .attr("transform", "rotate (" + 270 + "," + padding/2.5 + "," + height/2 + ")")
-      .style("font-size", 24)
+      .style("font-size", "0.8em")
       .style("font-family", "Gaegu, sans-serif")
       .style("fill", "rgb(232,70,28)");
 
@@ -169,7 +169,7 @@ function callback (error, data) {
       .attr("x", width-padding/3.5)
       .attr("y", height/2)
       .attr("transform", "rotate (" + 270 + "," + (width-padding/3.5) + "," + (height/2) + ")")
-      .style("font-size", 24)
+      .style("font-size", "0.8em")
       .style("font-family", "Gaegu, sans-serif")
       .style("fill", "rgb(30,103,180)");
   } // end initAxis
@@ -357,12 +357,11 @@ function callback (error, data) {
       .attr("y", "10%")
       .attr("text-anchor", "middle")
       .attr("id", "ep-title")
-      .style("font-size", "32px")
+      .style("font-size", "1em")
       .text("Season " + season + ", Ep " + episode + ": " + seasons[season-1][episode-1].title);
 
-    episodeImage.append("img")
+    episodeImage.select("img")
       .attr("src", seasons[season-1][episode-1].image_url)
-      .attr("width", "750px")
       .attr("id", "ep-image");
 
     episodeLink.append("a")
@@ -373,32 +372,32 @@ function callback (error, data) {
         .attr("y", "10%")
         .attr("text-anchor", "middle")
         .attr("id", "ep-link-text")
-        .style("font-size", "28px")
+        .style("font-size", "0.8em")
         .text("Watch this episode");
 
-    epLocations.append("text")
-      .attr("x", "50%")
-      .attr("y", "10%")
-      .attr("text-anchor", "middle")
-      .attr("id", "location-title")
-      .style("font-size", "28px")
-      .text("Where'd this episode take place?");
+    // epLocations.append("text")
+    //   .attr("x", "50%")
+    //   .attr("y", "10%")
+    //   .attr("text-anchor", "middle")
+    //   .attr("id", "location-title")
+    //   .style("font-size", "0.8em")
+    //   .text("Where'd this episode take place?");
 
-    epCharacters.append("text")
-      .attr("x", "50%")
-      .attr("y", "10%")
-      .attr("text-anchor", "middle")
-      .attr("id", "character-title")
-      .style("font-size", "28px")
-      .text("Who's in this episode?");
+    // epCharacters.append("text")
+    //   .attr("x", "50%")
+    //   .attr("y", "10%")
+    //   .attr("text-anchor", "middle")
+    //   .attr("id", "character-title")
+    //   .style("font-size", "0.8em")
+    //   .text("Who's in this episode?");
 
-    epGenders.append("text")
-      .attr("x", "50%")
-      .attr("y", "10%")
-      .attr("text-anchor", "middle")
-      .attr("id", "gender-title")
-      .style("font-size", "28px")
-      .text("Is this episode gender balanced?");
+    // epGenders.append("text")
+    //   .attr("x", "50%")
+    //   .attr("y", "10%")
+    //   .attr("text-anchor", "middle")
+    //   .attr("id", "gender-title")
+    //   .style("font-size", "0.8em")
+    //   .text("Is this episode gender balanced?");
   }
 
   function updateEpisode() {
@@ -410,8 +409,5 @@ function callback (error, data) {
 
     episodeLink.select("#ep-link-link")
       .attr("href", seasons[season-1][episode-1].video_url);
-
-    // episodeLink.select("#ep-link-text")
-    //   .text(seasons[season-1][episode-1].video_url);
   }
 } // end callback
