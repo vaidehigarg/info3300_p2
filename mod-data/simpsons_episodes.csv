@@ -158,8 +158,8 @@ id,title,original_air_date,season,number_in_season,us_viewers_in_millions,imdb_r
 157,"Burns, Baby Burns",11/17/96,8,4,12.6,7.7,http://static-media.fxx.com/img/FX_Networks_-_FXX/47/258/Simpsons_08_09.jpg,http://www.simpsonsworld.com/video/299622467514
 158,Bart After Dark,11/24/96,8,5,14.1,8.2,http://static-media.fxx.com/img/FX_Networks_-_FXX/558/375/Simpsons_08_10.jpg,http://www.simpsonsworld.com/video/294789699801
 159,A Milhouse Divided,12/1/96,8,6,12.8,8,http://static-media.fxx.com/img/FX_Networks_-_FXX/1024/983/Simpsons_08_08.jpg,http://www.simpsonsworld.com/video/277025347786
-160,Lisa's Date with Density,12/15/96,8,7,,7.8,http://static-media.fxx.com/img/FX_Networks_-_FXX/361/767/Simpsons_08_05__410383.jpg,http://www.simpsonsworld.com/video/306394691862
-161,Hurricane Neddy,12/29/96,8,8,,8.8,http://static-media.fxx.com/img/FX_Networks_-_FXX/297/607/Simpsons_08_11.jpg,http://www.simpsonsworld.com/video/436250179702
+160,Lisa's Date with Density,12/15/96,8,7,0,7.8,http://static-media.fxx.com/img/FX_Networks_-_FXX/361/767/Simpsons_08_05__410383.jpg,http://www.simpsonsworld.com/video/306394691862
+161,Hurricane Neddy,12/29/96,8,8,0,8.8,http://static-media.fxx.com/img/FX_Networks_-_FXX/297/607/Simpsons_08_11.jpg,http://www.simpsonsworld.com/video/436250179702
 162,El Viaje Misterioso de Nuestro Jomer (The Mysterious Voyage of Homer),1/5/97,8,9,14.9,8.5,http://static-media.fxx.com/img/FX_Networks_-_FXX/300/35/Simpsons_08_02.jpg,http://www.simpsonsworld.com/video/436252739905
 163,The Springfield Files,1/12/97,8,10,20.9,9,http://static-media.fxx.com/img/FX_Networks_-_FXX/306/391/Simpsons_08_03__677111.jpg,http://www.simpsonsworld.com/video/436259395954
 164,The Twisted World of Marge Simpson,1/19/97,8,11,14,7.8,http://static-media.fxx.com/img/FX_Networks_-_FXX/311/271/Simpsons_08_12.jpg,http://www.simpsonsworld.com/video/436264515927
@@ -171,7 +171,7 @@ id,title,original_air_date,season,number_in_season,us_viewers_in_millions,imdb_r
 170,"My Sister, My Sitter",3/2/97,8,17,15.1,8.1,http://static-media.fxx.com/img/FX_Networks_-_FXX/346/931/Simpsons_08_17.jpg,http://www.simpsonsworld.com/video/436301891875
 171,Homer vs. the Eighteenth Amendment,3/16/97,8,18,14.6,8.7,http://static-media.fxx.com/img/FX_Networks_-_FXX/443/103/Simpsons_08_19.jpg,http://www.simpsonsworld.com/video/436402755605
 172,Grade School Confidential,4/6/97,8,19,13.3,8.2,http://static-media.fxx.com/img/FX_Networks_-_FXX/452/887/Simpsons_08_13.jpg,http://www.simpsonsworld.com/video/436412995642
-173,The Canine Mutiny,4/13/97,8,20,,7.7,http://static-media.fxx.com/img/FX_Networks_-_FXX/412/347/Simpsons_08_20.jpg,http://www.simpsonsworld.com/video/436370499586
+173,The Canine Mutiny,4/13/97,8,20,0,7.7,http://static-media.fxx.com/img/FX_Networks_-_FXX/412/347/Simpsons_08_20.jpg,http://www.simpsonsworld.com/video/436370499586
 174,The Old Man and the Lisa,4/20/97,8,21,14,7.9,http://static-media.fxx.com/img/FX_Networks_-_FXX/425/35/Simpsons_08_21.jpg,http://www.simpsonsworld.com/video/436383811985
 175,In Marge We Trust,4/27/97,8,22,16.9,8,http://static-media.fxx.com/img/FX_Networks_-_FXX/477/287/Simpsons_08_22__537898.jpg,http://www.simpsonsworld.com/video/436438595644
 176,Homer's Enemy,5/4/97,8,23,11.8,9.2,http://static-media.fxx.com/img/FX_Networks_-_FXX/504/139/Simpsons_08_23__999359.jpg,http://www.simpsonsworld.com/video/436466755640
