@@ -25,13 +25,18 @@ section {
 }
 
 svg { 
-  border: solid #000000 1px; margin: 10px 10px 10px 10px; 
+  border: solid #000000 1px;
+  margin: 10px 10px 10px 10px;
 }
 
 .introduction { 
   text-transform: uppercase; 
   letter-spacing: 0.1em; 
   font-weight: bold; 
+}
+
+.end-section-div {
+  height: 100px;
 }
 
 /* CSS for slider */
@@ -167,7 +172,7 @@ svg {
 </section>
 <!-- END HEADER -->
 
-<!-- VISUALIZATION 1-->
+<!-- CONTENT -->
 <!-- IMDB ratings and viewership (in millions) vs. episode # (slider controls seasons) -->
 <section id="season-viz">
     <div id="season-div" align="center">
@@ -175,25 +180,34 @@ svg {
     </div>
 
     <div class="slidecontainer">
-      <input type="range" min="1" max="27" value="1" class="slider" id="season-slider">
+      <input type="range" min="1" max="27" value="1" class="slider" id="season-slider" title="Season">
     </div>
 </section>
 
 <section id="episode-viz">
-    <div align="center" class="ep-title-div"></div>
     <div id="episode-data-div">
-      <input type="image" src="images/point-left.png" class="left-button" id="previous"/>
-      <input type="image" src="images/point-right.png" class="right-button" id="next" />
-      <div class="ep-image-div"></div>
+      <div align="center" class="ep-title-div"></div>
+      <input type="image" src="images/point-left.png" class="left-button" id="previous" title="Previous Episode"/>
+      <input type="image" src="images/point-right.png" class="right-button" id="next" title="Next Episode"/>
+      <div align="center" class="ep-image-div"></div>
+      <div align="center" class="ep-link-div"></div>
     </div>
   </div>
     <!-- <svg id="episode-data" width="800" height="500"></svg> -->
 </section>
+<!-- END CONTENT -->
+
+<!-- FOOTER -->
+<section class="end-section">
+  <div class="end-section-div"></div>
+</section>
+<!-- END FOOTER -->
 
 <script>
 var svg = d3.select("#season-graph");
 var episodeTitle = d3.select(".ep-title-div");
 var episodeImage = d3.select(".ep-image-div");
+var episodeLink = d3.select(".ep-link-div");
 
 var width = 800;
 var height = 500;
@@ -235,7 +249,6 @@ function callback (error, data) {
     episodes.push([]);
     seasons.push([]);
   }
-
 
   data.forEach(function(d, i) {
     season_num = d.season;
@@ -551,24 +564,44 @@ function callback (error, data) {
       .text("Season " + season + ", Ep " + episode + ": " + seasons[season-1][episode-1].title);
 
     episodeImage.append("img")
-    .attr("src", seasons[season-1][episode-1].image_url)
-    .attr("width", "750px")
-    .attr("id", "ep-image");
+      .attr("src", seasons[season-1][episode-1].image_url)
+      .attr("width", "750px")
+      .attr("id", "ep-image");
+
+    // episodeLink.append("text")
+    //   .attr("x", "50%")
+    //   .attr("y", "10%")
+    //   .attr("text-anchor", "middle")
+    //   .attr("id", "ep-link")
+    //   .style("font-size", "24px")
+    //   .text(seasons[season-1][episode-1].video_url);
+
+    episodeLink.append("a")
+      .attr("href", seasons[season-1][episode-1].video_url)
+      .attr("id", "ep-link-link")
+      .append("text")
+        .attr("x", "50%")
+        .attr("y", "10%")
+        .attr("text-anchor", "middle")
+        .attr("id", "ep-link-text")
+        .style("font-size", "24px")
+        .text(seasons[season-1][episode-1].video_url);
+
   }
 
   function updateEpisode() {
     episodeTitle.select("#ep-title")
-      .attr("x", "50%")
-      .attr("y", "10%")
-      .attr("text-anchor", "middle")
-      .attr("id", "ep-title")
-      .style("font-size", "32px")
       .text("Season " + season + ", Ep " + episode + ": " + seasons[season-1][episode-1].title);
 
     episodeImage.select("#ep-image")
-    .attr("src", seasons[season-1][episode-1].image_url)
-    .attr("id", "ep-image")
-    .attr("width", "750px");  }
+      .attr("src", seasons[season-1][episode-1].image_url);
+
+    episodeLink.select("#ep-link-link")
+      .attr("href", seasons[season-1][episode-1].video_url);
+
+    episodeLink.select("#ep-link-text")
+      .text(seasons[season-1][episode-1].video_url);
+  }
 } // end callback
 </script>
 
