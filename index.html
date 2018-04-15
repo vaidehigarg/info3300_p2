@@ -408,6 +408,16 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
       locations[i] = [];
     }
 
+    //info and location info are what contain the useful data
+    //both: array of arrays(seasons), each of which contains one array per episode
+    //info: {male:int, female:int, unlabled:int, occurrence: JSON string, names:JSON string}
+    //occurrence is an associative array where each key is a character/location's normalized name and the value is the number of
+    //occurrences of that name/location in the episode encoded as a json
+    //names is an array of name/location strings sorted in descending order by occurrences in the episode encoded as a json
+    //if we want, it should be easy to process the data further and produce a gender ratio and most common character/location here
+    //instead of doing it in the actual version
+    //then, instead it'd be one array in the form {ratio:int, location:string, character:string}
+
     var info = new Array(27);
     for(var i = 0; i < info.length; i++){
       info[i] = [];
