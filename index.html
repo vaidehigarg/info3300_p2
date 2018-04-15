@@ -41,7 +41,7 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
     opacity: 1;
 }
 
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
@@ -70,7 +70,7 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
     <h5>INFO 3300: Project 2</h6>
     <h2>The Simpsons Through The Ages</h3>
     <h5>Vaidehi Garg, Brendan Fox, Jason Kwon</h3>
-  </div>  
+  </div>
 </section>
 <!-- END HEADER -->
 
@@ -90,7 +90,7 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
     var width = 800;
     var height = 500;
     var padding = 75;
-    
+
     var slideContainer = d3.select(".slidecontainer");
     var seasonSlider = document.getElementById("season-slider");
 
@@ -114,7 +114,7 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
     function callback (error, data) {
 
       if (error) { console.log(error); }
-      console.log(data);
+    //  console.log(data);
 
       for (var i=0; i<27; i++) {
         ratings.push([]);
@@ -135,10 +135,10 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
         }
       });
 
-      console.log(ratings);
+/*      console.log(ratings);
       console.log(viewership);
       console.log(episodes);
-      console.log(seasons);
+      console.log(seasons);*/
 
       var xScale = d3.scaleLinear();
       var yRatingScale = d3.scaleLinear();
@@ -389,7 +389,10 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
   <div id="viz2_div" align="center">
     <svg id="episode-detail" width="1000" height="1000"></svg>
     <script>
-    var episodes;
+    var s2episodes = [];
+    for(var i = 0; i < 27; i++){
+      s2episodes[i] = [];
+    }
     var lines = new Array(27);
     for(var i = 0; i < lines.length; i++){
       lines[i] = [];
@@ -405,24 +408,38 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
       locations[i] = [];
     }
 
-    d3.queue()
-    .defer(d3.csv, "mod-data/simpsons_episodes.csv", parseRow)
-    .awaitAll(v2callback); //fetch 27 episodes
+    var info = new Array(27);
+    for(var i = 0; i < info.length; i++){
+      info[i] = [];
+    }
 
-    d3.queue()
-    .defer(d3.csv, "mod-data/simpsons_script_lines.csv", parseRow)
-    .awaitAll(linesCallback); //get the lines, need these for data on characters/locations
 
-    d3.queue()
-    .defer(d3.csv, "mod-data/simpsons_characters.csv", parseRow)
-    .awaitAll(charactersCallback);
+  //  d3.queue()
+    //.defer(d3.csv, "mod-data/simpsons_episodes.csv", parseRow)
+    //.awaitAll(v2callback); //fetch 27 episodes
 
-    d3.queue()
-    .defer(d3.csv, "mod-data/simpsons_locations.csv", parseRow)
-    .awaitAll(locationsCallback);
+
+    //location, character, gender balanace of spoken lines
+    //csv per season
+    d3.csv("mod-data/simpsons_episodes.csv", v2callback);
+    d3.csv("mod-data/simpsons_script_lines.csv", linesCallback);
+    //d3.csv("mod-data/simpsons_characters.csv", charactersCallback); moved below
+    d3.csv("mod-data/simpsons_locations.csv", locationsCallback);
+
+  //  d3.queue()
+    //.defer(d3.csv, "mod-data/simpsons_script_lines.csv", parseRow)
+    //.awaitAll(linesCallback); //get the lines, need these for data on characters/locations
+
+    //d3.queue()
+    //.defer(d3.csv, "mod-data/simpsons_characters.csv", parseRow)
+    //.awaitAll(charactersCallback);
+
+//    d3.queue()
+  //  .defer(d3.csv, "mod-data/simpsons_locations.csv", parseRow)
+    //.awaitAll(locationsCallback);
 
     //code below takes info for the season 1 episode; extension to more episodes to come
-    var male = 0 ;
+/*    var male = 0;
     var female = 0;
     var unlabled = 0;
     var occurrence; //i can't think of a good name for this rigth now
@@ -442,66 +459,99 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
 
     var locs = [];
     for(var loc in locationOccurrence) {locs.push(loc);}
-    locs.sort(function(a,b){return locationOccurrence[b]-locationOccurrence[a]});
+    locs.sort(function(a,b){return locationOccurrence[b]-locationOccurrence[a]});*/
 
 
 
-    function v2callback(error, data){
-      if (error) { console.log(error); }
-      var topEpisodes = [];
-      var seasonBuffer = [];
+    function v2callback(data){
+
       var svg = d3.select("#episode-analysis");
       data.forEach(function(row){//this works because the data is sorted by season, ie each season comes in a block
-        if(seasonBuffer.length == 0){ //makes sure there is always an episode to look at
-          seasonBuffer.push(row);
+        var season = row['season']-1;
+        if(season == 27){
           return;
         }
-        if(row['season'] != seasonBuffer[0]['season']){ //if the current episode is a new season, find most watched episode and push it
-          seasonBuffer.sort(function(a,b){return b['us_viewers_in_millions'] - a['us_viewers_in_millions']});
-          console.log(seasonBuffer);
-          topEpisodes.push(seasonBuffer[0]);
-          seasonBuffer.length = 0;
-        }
-        else{
-          seasonBuffer.push(row);
-        }
+        var id = row['id'];
+        arr = {id: id};
+        s2episodes[season].push(arr);
+        lines[season].push([]);
+        characters[season].push([]);
+        locations[season].push([]);
+        info[season].push([]);
       });
 
-      episodes = topEpisodes;
+
+    //  console.log(s2episodes);
 
     }
 
-    function linesCallback(error, data){
+    function linesCallback(data){
+    //  console.log(lines);
     data.forEach(function(row){
-      episodes.forEach(function(episode, index){
-        if(row['episode_id'] == episode['id']){
-          consle.log("a");
-          lines[episode['season']].push(row); //get every line assigned to its episode separating them by season
-        }
+      s2episodes.forEach(function(season, snum){
+        season.forEach(function(episode, index){
+          if(row['episode_id'] == episode['id']  && row['speaking_line'] == 'true'){
+
+            lines[snum][index].push(row);
+
+            }
+        });
+
       });
     });
-      console.log(lines);
+    //  console.log(lines);
+    d3.csv("mod-data/simpsons_characters.csv", charactersCallback);
+
     }
 
-    function charactersCallback(error, data){
-    //console.log(lines);
+    function charactersCallback(data){
+
+
     data.forEach(function(row){
-      lines.forEach(function(episode, index){//lines is an array of arrays, each of which represents one episode
-    //    console.log(episode);
-        episode.forEach(function(line){
-        //  console.log(line);
-          if(row['id']==line['character_id']){
-            characters[episode['season']].push(row);
-          }
-        //  console.log("a");
+      lines.forEach(function(season, snum){
+        season.forEach(function(episode, index){
+          episode.forEach(function(line){
+            if(line['character_id'] == row['id']){
+              characters[snum][index].push(row);
+
+            }
+          });
         });
       });
     });
-    //  console.log(characters);
+    console.log(characters);
+        var male = 0;
+        var female = 0;
+        var unlabled = 0;
+        var occurrence; //i can't think of a good name for this rigth now
+        characters.forEach(function(season, snum){
+          lines.forEach(function(episode, index){
+            var male = 0;
+            var female = 0;
+            var unlabled = 0;
+            var occurrence; //i can't think of a good name for this rigth now
+            episode.forEach(function(character){
+              !character['gender']  ? unlabled++ : (character['gender'] == 'm' ? male++ : female++);
+              !occurrence[character['name']] ? occurrence[character['name']] = 1 : occurrence[character['name']]++;
+
+            });
+            var names = [];
+            for(var char in occurrence) {names.push(char);}
+            names.sort(function(a,b){return occurrence[b]-occurrence[a]});
+            occurrence = JSON.stringify(occurrence);
+            names = JSON.stringify(names);
+            var arr = {male:male, female:female, unlabled:unlabled, occurrence: occurrence, names:names};
+            info[snum][index] = arr;
+          });
+        });
+
+
+
     }
 
     function locationsCallback(error, data){
     data.forEach(function(row){
+
       lines.forEach(function(episode, index){
         episode.forEach(function(line){
           if(row['id'] == line['location_id']){
