@@ -11,6 +11,9 @@ var slideContainer = d3.select(".slidecontainer");
 var seasonSlider = document.getElementById("season-slider");
 var previousEp = document.getElementById("previous");
 var nextEp = document.getElementById("next");
+var epLocations = d3.select(".ep-location-div");
+var epCharacters = d3.select(".ep-character-div");
+var epGenders = d3.select(".ep-gender-div");
 
 /* season variable, controlled by slider */
 var season = 1;
@@ -109,7 +112,7 @@ function callback (error, data) {
     .range([height-padding,1.25*padding]);
 
     yViewsScale
-    .domain([d3.extent(viewership[season-1])[0], d3.extent(viewership[season-1])[1]])
+    .domain([d3.extent(viewership[season-1])[0]-2, d3.extent(viewership[season-1])[1]])
     .range([height-padding,1.25*padding]);
 
     xAxis.scale(xScale).ticks(episodes[season-1].length);
@@ -209,7 +212,7 @@ function callback (error, data) {
       .attr("x", "50%")
       .attr("y", "10%")
       .attr("text-anchor", "middle")
-      .text("Episode Viewership and Rating: Season " + String(season));
+      .text("Season " + String(season) + ": Episode Rating and Viewership");
 
     var ratingLineGenerator = d3.line()
     .x(d => xScale(d.number_in_season))
@@ -276,7 +279,7 @@ function callback (error, data) {
     .duration(500)
 
     svg.select("#season-number")
-    .text("Episode Viewership and Rating: Season " + String(season))
+    .text("Season " + String(season) + ": Episode Rating and Viewership")
     .transition(t);
 
     var ratingLineGenerator = d3.line()
@@ -362,14 +365,6 @@ function callback (error, data) {
       .attr("width", "750px")
       .attr("id", "ep-image");
 
-    // episodeLink.append("text")
-    //   .attr("x", "50%")
-    //   .attr("y", "10%")
-    //   .attr("text-anchor", "middle")
-    //   .attr("id", "ep-link")
-    //   .style("font-size", "24px")
-    //   .text(seasons[season-1][episode-1].video_url);
-
     episodeLink.append("a")
       .attr("href", seasons[season-1][episode-1].video_url)
       .attr("id", "ep-link-link")
@@ -381,6 +376,29 @@ function callback (error, data) {
         .style("font-size", "28px")
         .text("Watch this episode");
 
+    epLocations.append("text")
+      .attr("x", "50%")
+      .attr("y", "10%")
+      .attr("text-anchor", "middle")
+      .attr("id", "location-title")
+      .style("font-size", "28px")
+      .text("Where'd this episode take place?");
+
+    epCharacters.append("text")
+      .attr("x", "50%")
+      .attr("y", "10%")
+      .attr("text-anchor", "middle")
+      .attr("id", "character-title")
+      .style("font-size", "28px")
+      .text("Who's in this episode?");
+
+    epGenders.append("text")
+      .attr("x", "50%")
+      .attr("y", "10%")
+      .attr("text-anchor", "middle")
+      .attr("id", "gender-title")
+      .style("font-size", "28px")
+      .text("Is this episode gender balanced?");
   }
 
   function updateEpisode() {

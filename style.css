@@ -127,3 +127,31 @@ div {
   display: block;
   text-align: center;
 }
+
+.ep-data-div {
+  border: 1px solid black;
+  /*display: inline;*/
+}
+
+.ep-location-div {
+  border: 1px solid black;
+  width: 30%;
+  float: left;
+  margin-left: 2%;
+  text-align: center;
+}
+
+.ep-gender-div {
+  border: 1px solid black;
+  width: 30%;
+  float: right;
+  margin-right: 2%;
+  text-align: center;
+}
+
+.ep-character-div {
+  border: 1px solid black;
+  width: 30%;
+  margin: auto;
+  text-align: center;
+}
