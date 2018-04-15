@@ -413,6 +413,11 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
       info[i] = [];
     }
 
+    var location_info = new Array(27);
+    for(var i = 0; i < location_info.length; i++){
+      info[i] = [];
+    }
+
 
   //  d3.queue()
     //.defer(d3.csv, "mod-data/simpsons_episodes.csv", parseRow)
@@ -424,7 +429,7 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
     d3.csv("mod-data/simpsons_episodes.csv", v2callback);
     d3.csv("mod-data/simpsons_script_lines.csv", linesCallback);
     //d3.csv("mod-data/simpsons_characters.csv", charactersCallback); moved below
-    d3.csv("mod-data/simpsons_locations.csv", locationsCallback);
+  //  d3.csv("mod-data/simpsons_locations.csv", locationsCallback);
 
   //  d3.queue()
     //.defer(d3.csv, "mod-data/simpsons_script_lines.csv", parseRow)
@@ -478,6 +483,7 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
         characters[season].push([]);
         locations[season].push([]);
         info[season].push([]);
+        location_info[season].push([]);
       });
 
 
@@ -519,11 +525,8 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
         });
       });
     });
-    console.log(characters);
-        var male = 0;
-        var female = 0;
-        var unlabled = 0;
-        var occurrence; //i can't think of a good name for this rigth now
+  //  console.log(characters);
+
         characters.forEach(function(season, snum){
           lines.forEach(function(episode, index){
             var male = 0;
@@ -532,7 +535,7 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
             var occurrence; //i can't think of a good name for this rigth now
             episode.forEach(function(character){
               !character['gender']  ? unlabled++ : (character['gender'] == 'm' ? male++ : female++);
-              !occurrence[character['name']] ? occurrence[character['name']] = 1 : occurrence[character['name']]++;
+              !occurrence[character['normalized_name']] ? occurrence[character['normalized_name']] = 1 : occurrence[character['normalized_name']]++;
 
             });
             var names = [];
@@ -546,21 +549,41 @@ svg { border: solid #000000 1px; margin: 10px 10px 10px 10px; }
         });
 
 
+        d3.csv("mod-data/simpsons_locations.csv", locationsCallback);
 
     }
 
     function locationsCallback(error, data){
-    data.forEach(function(row){
+      data.forEach(function(row){
+        lines.forEach(function(season, snum){
+          season.forEach(function(episode, index){
+            episode.forEach(function(line){
+              if(line['location_id'] == row['id']){
+                locations[snum][index].push(row);
 
-      lines.forEach(function(episode, index){
-        episode.forEach(function(line){
-          if(row['id'] == line['location_id']){
-            locations[episode['season']].push(row);
-          }
+              }
+            });
+          });
         });
       });
-    });
-    //console.log(locations);
+
+
+      characters.forEach(function(season, snum){
+        lines.forEach(function(episode, index){
+          var occurrence;
+          episode.forEach(function(location){
+            !occurrence[location['normalized_name']] ? occurrence[location['normalized_name']] = 1 : occurrence[location['normalized_name']]++;
+
+          });
+          var names = [];
+          for(var char in occurrence) {names.push(char);}
+          names.sort(function(a,b){return occurrence[b]-occurrence[a]});
+          occurrence = JSON.stringify(occurrence);
+          names = JSON.stringify(names);
+          var arr = {occurrence: occurrence, names:names};
+          location_info[snum][index] = arr;
+        });
+      });
     }
     </script>
   </div>
