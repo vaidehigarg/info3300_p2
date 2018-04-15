@@ -378,8 +378,8 @@ function callback (error, data) {
         .attr("y", "10%")
         .attr("text-anchor", "middle")
         .attr("id", "ep-link-text")
-        .style("font-size", "24px")
-        .text(seasons[season-1][episode-1].video_url);
+        .style("font-size", "28px")
+        .text("Watch this episode");
 
   }
 
@@ -393,7 +393,7 @@ function callback (error, data) {
     episodeLink.select("#ep-link-link")
       .attr("href", seasons[season-1][episode-1].video_url);
 
-    episodeLink.select("#ep-link-text")
-      .text(seasons[season-1][episode-1].video_url);
+    // episodeLink.select("#ep-link-text")
+    //   .text(seasons[season-1][episode-1].video_url);
   }
 } // end callback

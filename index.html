@@ -8,7 +8,7 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="http://d3js.org/topojson.v2.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
@@ -35,13 +35,19 @@
       <input type="range" min="1" max="27" value="1" class="slider" id="season-slider" title="Season">
     </div>
 
-    <div id="episode-data-div">
+    <div id="episode-div">
       <div align="center" class="ep-title-div"></div>
       <input type="image" src="images/point-left.png" class="left-button" id="previous" title="Previous Episode"/>
       <input type="image" src="images/point-right.png" class="right-button" id="next" title="Next Episode"/>
       <div align="center" class="ep-image-div"></div>
       <div align="center" class="ep-link-div"></div>
+      <!-- <div id="ep-data-div" style="display: inline-block;">
+        <div style="border: 1px solid black; width: 30%;" class="ep-location-div"><p>Location</p></div>
+        <div style="border: 1px solid black; width: 30%;" class="ep-character-div"><p>Character</p></div>
+        <div style="border: 1px solid black; width: 30%;" class="ep-gender-div"><p>Gender</p></div>
+      </div> -->
     </div>
+
   </div>
     <!-- <svg id="episode-data" width="800" height="500"></svg> -->
 </section>
