@@ -372,7 +372,7 @@ function callback (error, data) {
         .attr("y", "10%")
         .attr("text-anchor", "middle")
         .attr("id", "ep-link-text")
-        .style("font-size", "0.8em")
+        .style("font-size", "0.9em")
         .text("Watch this episode");
 
     // epLocations.append("text")
