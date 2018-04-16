@@ -410,9 +410,9 @@ function callback (error, data) {
   function character_callback(error, data) {
     console.log(data);
 
-    char_width = 480;
+    char_width = 600;
     char_height = 600;
-    char_padding = 75;
+    char_padding = 60;
 
     var xCharScale = d3.scaleLinear();
     var yCharScale = d3.scaleLinear();
@@ -480,9 +480,9 @@ function callback (error, data) {
   function location_callback(error, data) {
     console.log(data);
 
-    loc_width = 480;
+    loc_width = 1000;
     loc_height = 600;
-    loc_padding = 75;
+    loc_padding = 60;
 
     var xLocScale = d3.scaleLinear();
     var yLocScale = d3.scaleLinear();
@@ -590,7 +590,7 @@ function callback (error, data) {
 
     console.log(data);
     charSvg.selectAll("rect").remove();
-    //charSVG.selectAll("chartext").remove();
+    charSvg.selectAll("#chartext").remove();
     data.forEach(function(row, index){
       charSvg.append("rect")
               .attr("width", xCharScale(row['count']))
@@ -598,14 +598,12 @@ function callback (error, data) {
               .attr("x", char_padding)
               .attr("y", char_height - yCharScale(index));
       charSvg.append("text")
-              .attr("font-size", "0.8em")
+              .attr("font-size", "0.7em")
               .attr("font-family", "Gaegu, sans-serif")
               .text(row['name'])
               .attr("x", char_padding + xCharScale(row['count']))
               .attr("y", char_height - yCharScale(index)+10)
-              .attr("class", "chartext");
-
-
+              .attr("id", "chartext");
     });
 
   }
