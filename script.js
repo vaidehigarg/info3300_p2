@@ -593,7 +593,7 @@ function callback (error, data) {
     charSvg.selectAll("#chartext").remove();
     data.forEach(function(row, index){
       charSvg.append("rect")
-              .attr("width", xCharScale(row['count']))
+              .attr("width", xCharScale(row['count'])-char_padding +2)//without the +1 some thnigs have nothing
               .attr("height", 10)
               .attr("x", char_padding)
               .attr("y", char_height - yCharScale(index));
@@ -601,7 +601,7 @@ function callback (error, data) {
               .attr("font-size", "0.7em")
               .attr("font-family", "Gaegu, sans-serif")
               .text(row['name'])
-              .attr("x", char_padding + xCharScale(row['count']))
+              .attr("x", xCharScale(row['count']) +1)
               .attr("y", char_height - yCharScale(index)+10)
               .attr("id", "chartext");
     });
