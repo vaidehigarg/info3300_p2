@@ -1,0 +1,16 @@
+/* Some unuseful stuffs */
+ html, body {
+    height: 100%;
+    overflow: hidden;
+}
+body {
+    background-image: url(http://diegolamonica.info/wp-content/uploads/2014/10/dlm-logo-small.png);
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
+* {
+    font-family: Arial;
+}
+p {
+    padding: 0.5em;
+}

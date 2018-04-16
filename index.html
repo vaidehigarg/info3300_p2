@@ -8,7 +8,7 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="http://d3js.org/topojson.v2.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="simpsons_style.css">
 </head>
 
 <body>
@@ -42,23 +42,23 @@
       <div align="center" class="ep-image-div"><img width="100%" height="auto" max-width="40%"></div>
       <div align="center" class="ep-link-div"></div>
       <div id="ep-data-div">
-        <div class="ep-location-div">
-          <p style="font-size: 0.9em">Where'd this episode take place?</p>
-          <svg id="ep-location-svg" width="95%" height="500px"></svg>
-        </div>
-        <div class="ep-gender-div">
-          <p style="font-size: 0.9em">Is this episode gender balanced?</p>
-          <svg id="ep-gender-svg" width="95%" height="500px"></svg>
-        </div>
         <div class="ep-character-div">
           <p style="font-size: 0.9em">Who's in this episode?</p>
-          <svg id="ep-character-svg" width="95%" height="500px"></svg>
+          <svg id="ep-character-svg"></svg>
         </div>
+
+        <div class="ep-location-div">
+          <p style="font-size: 0.9em">Where'd this episode happen?</p>
+          <svg id="ep-location-svg"></svg>
+        </div>
+        
+       <!--  <div class="ep-gender-div">
+          <p style="font-size: 0.9em">Is this episode gender balanced?</p>
+          <svg id="ep-gender-svg" width="95%" height="500px"></svg>
+        </div> -->
       </div>
     </div>
-
   </div>
-    <!-- <svg id="episode-data" width="800" height="500"></svg> -->
 </section>
 <!-- END CONTENT -->
 

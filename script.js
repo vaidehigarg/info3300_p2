@@ -14,6 +14,8 @@ var nextEp = document.getElementById("next");
 var epLocations = d3.select(".ep-location-div");
 var epCharacters = d3.select(".ep-character-div");
 var epGenders = d3.select(".ep-gender-div");
+var charSvg = d3.select("#ep-character-svg");
+var locSvg = d3.select("#ep-location-svg");
 
 /* season variable, controlled by slider */
 var season = 1;
@@ -375,6 +377,19 @@ function callback (error, data) {
         .style("font-size", "0.9em")
         .text("Watch this episode");
 
+    d3.queue()
+    .defer(d3.csv, "episode-data/s" + season + "e" + episode + ".csv", parseRow)
+    .await(character_callback);
+
+    d3.queue()
+    .defer(d3.csv, "episode-data/s" + season + "e" + episode + "-loc.csv", parseRow)
+    .await(location_callback);
+
+    // d3.queue()
+    // .defer(d3.csv, "episode-data/s1e1.csv", parseRow)
+    // // .defer(d3.csv, "episode-data/s" + season + "e" + episode + "-loc.csv", parseRow)
+    // .await(episode_callback);
+
     // epLocations.append("text")
     //   .attr("x", "50%")
     //   .attr("y", "10%")
@@ -409,5 +424,59 @@ function callback (error, data) {
 
     episodeLink.select("#ep-link-link")
       .attr("href", seasons[season-1][episode-1].video_url);
+
+    d3.queue()
+    .defer(d3.csv, "episode-data/s" + season + "e" + episode + ".csv", parseRow)
+    .await(character_update);
+
+    d3.queue()
+    .defer(d3.csv, "episode-data/s" + season + "e" + episode + "-loc.csv", parseRow)
+    .await(location_update);
+  }
+
+  function character_callback(error, data) {
+    console.log("hello chars");
+
+    charSvg
+    .attr("width", "90%")
+    .attr("height", "500px")
+    .append("text")
+      .attr("x", "50%")
+      .attr("y", "10%")
+      .attr("text-anchor", "middle")
+      .style("font-size", "0.8em")
+      .text("Characters");
+  }
+
+  function location_callback(error, data) {
+    console.log("hello locs");
+
+    locSvg
+    .attr("width", "90%")
+    .attr("height", "500px")
+    .append("text")
+      .attr("x", "50%")
+      .attr("y", "10%")
+      .attr("text-anchor", "middle")
+      .style("font-size", "0.8em")
+      .text("Locations");
+  }
+
+  function character_update(error, data) {
+    charSvg.select("text")
+    .attr("x", "50%")
+    .attr("y", "10%")
+    .attr("text-anchor", "middle")
+    .style("font-size", "0.8em")
+    .text("Characters Updated");
+  }
+
+  function location_update(error, data) {
+    locSvg.select("text")
+    .attr("x", "50%")
+    .attr("y", "10%")
+    .attr("text-anchor", "middle")
+    .style("font-size", "0.8em")
+    .text("Locations Updated");
   }
 } // end callback
