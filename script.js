@@ -464,10 +464,25 @@ function callback (error, data) {
       .attr("transform", "rotate (" + 270 + "," + char_padding/2.5 + "," + char_height/2 + ")")
       .style("font-size", "0.8em")
       .style("font-family", "Gaegu, sans-serif");
+
+      data.forEach(function(row, index){
+      charSvg.append("rect")
+        .attr("width", xCharScale(row['count'])-char_padding +2)//without the +1 some thnigs have nothing
+        .attr("height", 10)
+        .attr("x", char_padding)
+        .attr("y", char_height - yCharScale(index));
+      charSvg.append("text")
+        .attr("font-size", "0.7em")
+        .attr("font-family", "Gaegu, sans-serif")
+        .text(row['name'])
+        .attr("x", xCharScale(row['count']) +1)
+        .attr("y", char_height - yCharScale(index)+10)
+        .attr("id", "chartext");
+    });
   }
 
   function location_callback(error, data) {
-    console.log(data);
+    data = data.slice(0, 25);
 
     loc_width = 600;
     loc_height = 600;
