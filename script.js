@@ -592,11 +592,16 @@ function callback (error, data) {
       // // locSvg.selectAll("#y-label-loc").remove();
       charSvg.append("text")
       .attr("id", "char-chart-oops")
-      .attr("x", "50%")
+      .attr("x", "40%")
       .attr("y", "50%")
       .attr("text-anchor", "middle")
       .style("font-size", "0.9em")
-      .text("D'oh! No character data for this episode.");
+      .text("D'oh! No data available.");
+
+      // charSvg.append("img")
+      // .attr("src","images/donut.png")
+      // // .attr("width", "500px")
+      // .attr("id", "char-chart-oops");
     }
 
     else {
@@ -673,11 +678,11 @@ function callback (error, data) {
       // // locSvg.selectAll("#y-label-loc").remove();
       locSvg.append("text")
       .attr("id", "loc-chart-oops")
-      .attr("x", "50%")
+      .attr("x", "35%")
       .attr("y", "50%")
       .attr("text-anchor", "middle")
       .style("font-size", "0.9em")
-      .text("D'oh! No location data for this episode.");
+      .text("D'oh! No data available.");
     }
 
     else {
