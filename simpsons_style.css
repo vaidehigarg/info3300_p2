@@ -134,7 +134,7 @@ div {
 }
 
 .ep-location-div {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   width: 47%;
   float: right;
   margin-right: 2%;
@@ -142,7 +142,7 @@ div {
 }
 
 .ep-character-div {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   width: 47%;
   float: left;
   margin-left: 2%;
