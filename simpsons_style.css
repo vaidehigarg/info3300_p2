@@ -1,5 +1,8 @@
 body { 
-  background-color: rgb(250,205,40); 
+  /*background-color: rgb(250,205,40); */
+  /*background-color: rgb(90,156,215); */
+  /*background-color: rgb(199,162,107);*/
+  /*background-color: rgb(29,30,26);*/
   font-family: 'Gaegu', 
   sans-serif; font-size: 2em; 
 }
@@ -13,7 +16,8 @@ section {
 }
 
 svg { 
-  border: solid #000000 1px;
+  background-color: rgb(250,205,40); 
+  /*border: solid #000000 1px;*/
   margin: 0.5% 0.5% 0.5% 0.5%;
 }
 
@@ -23,6 +27,7 @@ div {
 }
 
 .introduction { 
+  /*background-color: rgb(250,205,40); */
   text-transform: uppercase; 
   letter-spacing: 0.1em; 
   font-weight: bold; 
@@ -129,7 +134,7 @@ div {
 }
 
 .ep-location-div {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   width: 45%;
   float: right;
   margin-right: 2%;
@@ -137,7 +142,7 @@ div {
 }
 
 .ep-character-div {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   width: 45%;
   float: left;
   margin-left: 2%;
