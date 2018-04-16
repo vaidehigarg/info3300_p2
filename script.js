@@ -459,9 +459,9 @@ function callback (error, data) {
     charSvg.append("text")
       .text("Character")
       .style("text-anchor", "middle")
-      .attr("x", char_padding/2.5)
+      .attr("x", char_padding/1.5)
       .attr("y", char_height/2)
-      .attr("transform", "rotate (" + 270 + "," + char_padding/2.5 + "," + char_height/2 + ")")
+      .attr("transform", "rotate (" + 270 + "," + char_padding/1.5 + "," + char_height/2 + ")")
       .style("font-size", "0.8em")
       .style("font-family", "Gaegu, sans-serif");
 
@@ -544,9 +544,9 @@ function callback (error, data) {
     locSvg.append("text")
       .text("Location")
       .style("text-anchor", "middle")
-      .attr("x", loc_padding/2.5)
+      .attr("x", loc_padding/1.5)
       .attr("y", loc_height/2)
-      .attr("transform", "rotate (" + 270 + "," + loc_padding/2.5 + "," + loc_height/2 + ")")
+      .attr("transform", "rotate (" + 270 + "," + loc_padding/1.5 + "," + loc_height/2 + ")")
       .style("font-size", "0.8em")
       .style("font-family", "Gaegu, sans-serif");
 
