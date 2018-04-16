@@ -129,7 +129,7 @@ div {
 }
 
 .ep-location-div {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   width: 45%;
   float: right;
   margin-right: 2%;
@@ -137,7 +137,7 @@ div {
 }
 
 .ep-character-div {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   width: 45%;
   float: left;
   margin-left: 2%;
@@ -145,7 +145,7 @@ div {
 }
 
 .ep-gender-div {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   width: 30%;
   margin: auto;
   text-align: center;

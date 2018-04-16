@@ -32,6 +32,10 @@ var parseRow = function (row) {
   return row;
 }
 
+var parseEpRow = function (row) {
+  return {name: row.name, count: Number(row.count)};
+}
+
 ratings = [];
 viewership = [];
 episodes = [];
@@ -90,7 +94,6 @@ function callback (error, data) {
       episode = 1;
     } else {
       episode = episode - 1;
-      console.log("Next Episode: " + episode);
       updateEpisode();
     }
   };
@@ -100,7 +103,6 @@ function callback (error, data) {
       episode = Math.max.apply(null, episodes[season-1]);
     } else {
       episode = episode + 1;
-      console.log("Previous Episode: " + episode);
       updateEpisode();
     }
   };
@@ -378,41 +380,12 @@ function callback (error, data) {
         .text("Watch this episode");
 
     d3.queue()
-    .defer(d3.csv, "episode-data/s" + season + "e" + episode + ".csv", parseRow)
+    .defer(d3.csv, "episode-data/s" + season + "e" + episode + ".csv", parseEpRow)
     .await(character_callback);
 
     d3.queue()
-    .defer(d3.csv, "episode-data/s" + season + "e" + episode + "-loc.csv", parseRow)
+    .defer(d3.csv, "episode-data/s" + season + "e" + episode + "-loc.csv", parseEpRow)
     .await(location_callback);
-
-    // d3.queue()
-    // .defer(d3.csv, "episode-data/s1e1.csv", parseRow)
-    // // .defer(d3.csv, "episode-data/s" + season + "e" + episode + "-loc.csv", parseRow)
-    // .await(episode_callback);
-
-    // epLocations.append("text")
-    //   .attr("x", "50%")
-    //   .attr("y", "10%")
-    //   .attr("text-anchor", "middle")
-    //   .attr("id", "location-title")
-    //   .style("font-size", "0.8em")
-    //   .text("Where'd this episode take place?");
-
-    // epCharacters.append("text")
-    //   .attr("x", "50%")
-    //   .attr("y", "10%")
-    //   .attr("text-anchor", "middle")
-    //   .attr("id", "character-title")
-    //   .style("font-size", "0.8em")
-    //   .text("Who's in this episode?");
-
-    // epGenders.append("text")
-    //   .attr("x", "50%")
-    //   .attr("y", "10%")
-    //   .attr("text-anchor", "middle")
-    //   .attr("id", "gender-title")
-    //   .style("font-size", "0.8em")
-    //   .text("Is this episode gender balanced?");
   }
 
   function updateEpisode() {
@@ -426,57 +399,235 @@ function callback (error, data) {
       .attr("href", seasons[season-1][episode-1].video_url);
 
     d3.queue()
-    .defer(d3.csv, "episode-data/s" + season + "e" + episode + ".csv", parseRow)
+    .defer(d3.csv, "episode-data/s" + season + "e" + episode + ".csv", parseEpRow)
     .await(character_update);
 
     d3.queue()
-    .defer(d3.csv, "episode-data/s" + season + "e" + episode + "-loc.csv", parseRow)
+    .defer(d3.csv, "episode-data/s" + season + "e" + episode + "-loc.csv", parseEpRow)
     .await(location_update);
   }
 
   function character_callback(error, data) {
-    console.log("hello chars");
+    console.log(data);
 
-    charSvg
-    .attr("width", "90%")
-    .attr("height", "500px")
-    .append("text")
+    char_width = 500;
+    char_height = 600;
+    char_padding = 75;
+
+    var xCharScale = d3.scaleLinear();
+    var yCharScale = d3.scaleLinear();
+
+    var xCharAxis = d3.axisBottom();
+    var yCharAxis = d3.axisLeft();
+
+    var xCharExtent = d3.extent(data, function(d) { return d.count; });
+
+    xCharScale
+    .domain(xCharExtent)
+    .range([char_padding,char_width-char_padding]);
+
+    yCharScale
+    .domain([0, data.length])
+    .range([char_height-char_padding,char_padding]);
+
+    xCharAxis.scale(xCharScale);
+    yCharAxis.scale(yCharScale);
+
+    charSvg.attr("width", String(char_width)).attr("height", String(char_height));
+
+    charSvg.append("text")
+      .attr("id", "char-chart-title")
       .attr("x", "50%")
-      .attr("y", "10%")
+      .attr("y", "7%")
       .attr("text-anchor", "middle")
+      .style("font-size", "0.9em")
+      .text("Who's in this episode?");
+
+    charSvg.append("g")
+      .attr("class", "x axis")
+      .style("font-size", "0.5em")
+      .style("font-family", "Gaegu, sans-serif")
+      .attr("transform", "translate(" + 0 + "," + (char_height-char_padding) + ")")
+      .call(xCharAxis);
+
+    charSvg.append("g")
+      .attr("class", "y axis")
+      .style("font-size", "0.5em")
+      .style("font-family", "Gaegu, sans-serif")
+      .attr("transform", "translate(" + char_padding + "," + 0 + ")")
+      .call(yCharAxis);
+
+    /* Add x-axis label */
+    charSvg.append("text")
+      .text("# Spoken Lines")
+      .style("text-anchor", "middle")
+      .attr("x", "50%")
+      .attr("y", "97%")
+      .attr("font-size", "0.8em")
+      .attr("font-family", "Gaegu, sans-serif");
+
+    /* Add y-axis label */
+    charSvg.append("text")
+      .text("Character")
+      .style("text-anchor", "middle")
+      .attr("x", char_padding/2.5)
+      .attr("y", char_height/2)
+      .attr("transform", "rotate (" + 270 + "," + char_padding/2.5 + "," + char_height/2 + ")")
       .style("font-size", "0.8em")
-      .text("Characters");
+      .style("font-family", "Gaegu, sans-serif");
   }
 
   function location_callback(error, data) {
-    console.log("hello locs");
+    console.log(data);
 
-    locSvg
-    .attr("width", "90%")
-    .attr("height", "500px")
-    .append("text")
+    loc_width = 500;
+    loc_height = 600;
+    loc_padding = 75;
+
+    var xLocScale = d3.scaleLinear();
+    var yLocScale = d3.scaleLinear();
+
+    var xLocAxis = d3.axisBottom();
+    var yLocAxis = d3.axisLeft();
+
+    var xLocExtent = d3.extent(data, function(d) { return d.count; });
+
+    xLocScale
+    .domain(xLocExtent)
+    .range([loc_padding,loc_width-loc_padding]);
+
+    yLocScale
+    .domain([0, data.length])
+    .range([loc_height-loc_padding,loc_padding]);
+
+    xLocAxis.scale(xLocScale);
+    yLocAxis.scale(yLocScale);
+
+    locSvg.attr("width", String(loc_width)).attr("height", String(loc_height));
+
+    locSvg.append("text")
+      .attr("id", "char-chart-title")
       .attr("x", "50%")
-      .attr("y", "10%")
+      .attr("y", "7%")
       .attr("text-anchor", "middle")
+      .style("font-size", "0.9em")
+      .text("Where'd it happen?");
+
+    locSvg.append("g")
+      .attr("class", "x axis")
+      .style("font-size", "0.5em")
+      .style("font-family", "Gaegu, sans-serif")
+      .attr("transform", "translate(" + 0 + "," + (loc_height-loc_padding) + ")")
+      .call(xLocAxis);
+
+    locSvg.append("g")
+      .attr("class", "y axis")
+      .style("font-size", "0.5em")
+      .style("font-family", "Gaegu, sans-serif")
+      .attr("transform", "translate(" + loc_padding + "," + 0 + ")")
+      .call(yLocAxis);
+
+    /* Add x-axis label */
+    locSvg.append("text")
+      .text("# Spoken Lines")
+      .style("text-anchor", "middle")
+      .attr("x", "50%")
+      .attr("y", "97%")
+      .attr("font-size", "0.8em")
+      .attr("font-family", "Gaegu, sans-serif");
+
+    /* Add y-axis label */
+    locSvg.append("text")
+      .text("Location")
+      .style("text-anchor", "middle")
+      .attr("x", loc_padding/2.5)
+      .attr("y", loc_height/2)
+      .attr("transform", "rotate (" + 270 + "," + loc_padding/2.5 + "," + loc_height/2 + ")")
       .style("font-size", "0.8em")
-      .text("Locations");
+      .style("font-family", "Gaegu, sans-serif");
   }
 
   function character_update(error, data) {
-    charSvg.select("text")
-    .attr("x", "50%")
-    .attr("y", "10%")
-    .attr("text-anchor", "middle")
-    .style("font-size", "0.8em")
-    .text("Characters Updated");
+    var xCharScale = d3.scaleLinear();
+    var yCharScale = d3.scaleLinear();
+
+    var xCharAxis = d3.axisBottom();
+    var yCharAxis = d3.axisLeft();
+
+    var xCharExtent = d3.extent(data, function(d) { return d.count; });
+
+    xCharScale
+    .domain(xCharExtent)
+    .range([char_padding,char_width-char_padding]);
+
+    yCharScale
+    .domain([0, data.length])
+    .range([char_height-char_padding,char_padding]);
+
+    xCharAxis.scale(xCharScale);
+    yCharAxis.scale(yCharScale);
+
+    var t = d3.transition()
+    .duration(500)
+
+    var x = charSvg.selectAll(".x")
+    .data(["dummy"]);
+
+    var newX = x.enter().append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(" + 0 + "," + (char_height-char_padding) + ")");
+
+    x.merge(newX).transition(t).call(xCharAxis);
+
+    var y = charSvg.selectAll(".y")
+    .data(["dummy"]);
+
+    var newY = y.enter().append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(" + char_padding + "," + 0 + ")");
+
+    y.merge(newY).transition(t).call(yCharAxis);
   }
 
   function location_update(error, data) {
-    locSvg.select("text")
-    .attr("x", "50%")
-    .attr("y", "10%")
-    .attr("text-anchor", "middle")
-    .style("font-size", "0.8em")
-    .text("Locations Updated");
+    var xLocScale = d3.scaleLinear();
+    var yLocScale = d3.scaleLinear();
+
+    var xLocAxis = d3.axisBottom();
+    var yLocAxis = d3.axisLeft();
+
+    var xLocExtent = d3.extent(data, function(d) { return d.count; });
+
+    xLocScale
+    .domain(xLocExtent)
+    .range([loc_padding,loc_width-loc_padding]);
+
+    yLocScale
+    .domain([0, data.length])
+    .range([loc_height-loc_padding,loc_padding]);
+
+    xLocAxis.scale(xLocScale);
+    yLocAxis.scale(yLocScale);
+
+    var t = d3.transition()
+    .duration(500)
+
+    var x = locSvg.selectAll(".x")
+    .data(["dummy"]);
+
+    var newX = x.enter().append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(" + 0 + "," + (loc_height-loc_padding) + ")");
+
+    x.merge(newX).transition(t).call(xLocAxis);
+
+    var y = locSvg.selectAll(".y")
+    .data(["dummy"]);
+
+    var newY = y.enter().append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(" + loc_padding + "," + 0 + ")");
+
+    y.merge(newY).transition(t).call(yLocAxis);
   }
 } // end callback
