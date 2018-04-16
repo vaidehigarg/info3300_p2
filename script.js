@@ -180,7 +180,7 @@ function callback (error, data) {
 
   function drawAxis() {
     var t = d3.transition()
-    .duration(500)
+    .duration(250)
 
     var x = svg.selectAll(".x")
     .data(["dummy"]);
@@ -242,14 +242,7 @@ function callback (error, data) {
     .style("stroke-width", 2)
     .style("fill", "none");
 
-    // slideContainer.append("text")
-    //   .attr("id", "season-number")
-    //   .attr("x", "50%")
-    //   .attr("y", "10%")
-    //   .attr("text-anchor", "middle")
-    //   .text("Slide to pick a season (1-27)");
-
-    // initCircles();
+    initCircles();
 
     function initCircles() {
       var circles1 = svg.selectAll("ratings_circles").data(seasons[season-1]);
@@ -280,7 +273,7 @@ function callback (error, data) {
 
   function drawGraph() {
     var t = d3.transition()
-    .duration(500)
+    .duration(250)
 
     svg.select("#season-number")
     .text("Season " + String(season) + ": Episode Rating and Viewership")
@@ -310,12 +303,8 @@ function callback (error, data) {
     .style("stroke-width", 2)
     .style("fill", "none");
 
-    // d3.queue
-    // .defer(removeCircles)
-    // .await(updateCircles)
-
-    // removeCircles();
-    // updateCircles();
+    removeCircles();
+    updateCircles();
 
     function removeCircles() {
       svg.selectAll("#ratings_points").remove();
@@ -334,7 +323,7 @@ function callback (error, data) {
       mergedCircles1.data(seasons[season-1])
       .transition()
       .duration(0)
-      .delay(400)
+      .delay(0)
       .attr("id", "ratings_points")
       .attr("cx", function (d) { return xScale(d.number_in_season) })
       .attr("cy", function (d) { return yRatingScale(d.imdb_rating) })
@@ -344,7 +333,7 @@ function callback (error, data) {
       mergedCircles2.data(seasons[season-1])
       .transition()
       .duration(0)
-      .delay(400)
+      .delay(0)
       .attr("id", "views_points")
       .attr("cx", function (d) { return xScale(d.number_in_season) })
       .attr("cy", function (d) { return yViewsScale(d.us_viewers_in_millions) })
@@ -548,6 +537,9 @@ function callback (error, data) {
   }
 
   function character_update(error, data) {
+
+    data = data.slice(0, 25);
+
     var xCharScale = d3.scaleLinear();
     var yCharScale = d3.scaleLinear();
 
@@ -568,7 +560,7 @@ function callback (error, data) {
     yCharAxis.scale(yCharScale);
 
     var t = d3.transition()
-    .duration(500)
+    .duration(250)
 
     var x = charSvg.selectAll(".x")
     .data(["dummy"]);
@@ -592,21 +584,21 @@ function callback (error, data) {
     charSvg.selectAll("rect").remove();
     charSvg.selectAll("#chartext").remove();
     data.forEach(function(row, index){
-          charSvg.append("rect")
-                  .attr("width", xCharScale(row['count'])-char_padding +2)//without the +1 some thnigs have nothing
-                  .attr("height", 10)
-                  .attr("x", char_padding)
-                  .attr("y", char_height - yCharScale(index));
-          charSvg.append("text")
-                  .attr("font-size", "0.7em")
-                  .attr("font-family", "Gaegu, sans-serif")
-                  .text(row['name'])
-                  .attr("x", xCharScale(row['count']) +1)
-                  .attr("y", char_height - yCharScale(index)+10)
-                  .attr("id", "chartext");
-        });
+      charSvg.append("rect")
+        .attr("width", xCharScale(row['count'])-char_padding +2)//without the +1 some thnigs have nothing
+        .attr("height", 10)
+        .attr("x", char_padding)
+        .attr("y", char_height - yCharScale(index));
+      charSvg.append("text")
+        .attr("font-size", "0.7em")
+        .attr("font-family", "Gaegu, sans-serif")
+        .text(row['name'])
+        .attr("x", xCharScale(row['count']) +1)
+        .attr("y", char_height - yCharScale(index)+10)
+        .attr("id", "chartext");
+    });
 
-      }
+  }
 
   function location_update(error, data) {
     var xLocScale = d3.scaleLinear();
