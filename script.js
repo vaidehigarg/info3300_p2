@@ -480,7 +480,7 @@ function callback (error, data) {
   function location_callback(error, data) {
     console.log(data);
 
-    loc_width = 1000;
+    loc_width = 600;
     loc_height = 600;
     loc_padding = 60;
 
