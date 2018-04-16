@@ -321,7 +321,7 @@ function callback (error, data) {
       svg.selectAll("#ratings_points").remove();
       svg.selectAll("#views_points").remove();
     } // end removeCircles
-    
+
     function updateCircles() {
       var circles1 = svg.selectAll("ratings_circles").data(seasons[season-1]);
       var addedCircles1 = circles1.enter().append("circle");
@@ -587,6 +587,27 @@ function callback (error, data) {
     .attr("transform", "translate(" + char_padding + "," + 0 + ")");
 
     y.merge(newY).transition(t).call(yCharAxis);
+
+    console.log(data);
+    charSvg.selectAll("rect").remove();
+    //charSVG.selectAll("chartext").remove();
+    data.forEach(function(row, index){
+      charSvg.append("rect")
+              .attr("width", xCharScale(row['count']))
+              .attr("height", 10)
+              .attr("x", char_padding)
+              .attr("y", char_height - yCharScale(index));
+      charSvg.append("text")
+              .attr("font-size", "0.8em")
+              .attr("font-family", "Gaegu, sans-serif")
+              .text(row['name'])
+              .attr("x", char_padding + xCharScale(row['count']))
+              .attr("y", char_height - yCharScale(index)+10)
+              .attr("class", "chartext");
+
+
+    });
+
   }
 
   function location_update(error, data) {
