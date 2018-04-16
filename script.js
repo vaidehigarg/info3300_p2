@@ -410,7 +410,7 @@ function callback (error, data) {
   function character_callback(error, data) {
     console.log(data);
 
-    char_width = 500;
+    char_width = 480;
     char_height = 600;
     char_padding = 75;
 
@@ -480,7 +480,7 @@ function callback (error, data) {
   function location_callback(error, data) {
     console.log(data);
 
-    loc_width = 500;
+    loc_width = 480;
     loc_height = 600;
     loc_padding = 75;
 
