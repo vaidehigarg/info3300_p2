@@ -387,13 +387,23 @@ function callback (error, data) {
     episodeLink.select("#ep-link-link")
       .attr("href", seasons[season-1][episode-1].video_url);
 
-    d3.queue()
-    .defer(d3.csv, "episode-data/s" + season + "e" + episode + ".csv", parseEpRow)
-    .await(character_update);
+    if ((season == 26 && episode > 16) || (season == 27)) {
+      d3.queue()
+      .defer(d3.csv, "episode-data/s26e16.csv", parseEpRow)
+      .await(character_update);
 
-    d3.queue()
-    .defer(d3.csv, "episode-data/s" + season + "e" + episode + "-loc.csv", parseEpRow)
-    .await(location_update);
+      d3.queue()
+      .defer(d3.csv, "episode-data/s26e16-loc.csv", parseEpRow)
+      .await(location_update);
+    } else {
+      d3.queue()
+      .defer(d3.csv, "episode-data/s" + season + "e" + episode + ".csv", parseEpRow)
+      .await(character_update);
+
+      d3.queue()
+      .defer(d3.csv, "episode-data/s" + season + "e" + episode + "-loc.csv", parseEpRow)
+      .await(location_update);
+    }
   }
 
   function character_callback(error, data) {
