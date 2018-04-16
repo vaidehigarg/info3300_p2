@@ -399,21 +399,21 @@ function callback (error, data) {
   function character_callback(error, data) {
     data = data.slice(0, 25);
 
-    char_width = 600;
+    char_width = 620;
     char_height = 600;
     char_padding = 60;
 
     var xCharScale = d3.scaleLinear();
     var yCharScale = d3.scaleLinear();
 
-    var xCharAxis = d3.axisBottom();
+    var xCharAxis = d3.axisBottom().ticks(5);
     var yCharAxis = d3.axisLeft().ticks(0);
 
     var xCharExtent = d3.extent(data, function(d) { return d.count; });
 
     xCharScale
     .domain(xCharExtent)
-    .range([char_padding,char_width-char_padding]);
+    .range([char_padding,char_width/1.5]);
 
     yCharScale
     .domain([0, data.length])
@@ -450,7 +450,7 @@ function callback (error, data) {
     charSvg.append("text")
       .text("# Spoken Lines")
       .style("text-anchor", "middle")
-      .attr("x", "50%")
+      .attr("x", "40%")
       .attr("y", "97%")
       .attr("font-size", "0.8em")
       .attr("font-family", "Gaegu, sans-serif");
@@ -467,7 +467,7 @@ function callback (error, data) {
 
       data.forEach(function(row, index){
       charSvg.append("rect")
-        .attr("width", xCharScale(row['count'])-char_padding +2)//without the +1 some thnigs have nothing
+        .attr("width", xCharScale(row['count'])-char_padding+2)//without the +1 some thnigs have nothing
         .attr("height", 10)
         .attr("x", char_padding)
         .attr("y", char_height - yCharScale(index));
@@ -484,21 +484,21 @@ function callback (error, data) {
   function location_callback(error, data) {
     data = data.slice(0, 25);
 
-    loc_width = 600;
+    loc_width = 620;
     loc_height = 600;
     loc_padding = 60;
 
     var xLocScale = d3.scaleLinear();
     var yLocScale = d3.scaleLinear();
 
-    var xLocAxis = d3.axisBottom();
+    var xLocAxis = d3.axisBottom().ticks(5);
     var yLocAxis = d3.axisLeft().ticks(0);
 
     var xLocExtent = d3.extent(data, function(d) { return d.count; });
 
     xLocScale
     .domain(xLocExtent)
-    .range([loc_padding,loc_width-loc_padding]);
+    .range([loc_padding,loc_width/1.5]);
 
     yLocScale
     .domain([0, data.length])
@@ -535,7 +535,7 @@ function callback (error, data) {
     locSvg.append("text")
       .text("# Spoken Lines")
       .style("text-anchor", "middle")
-      .attr("x", "50%")
+      .attr("x", "40%")
       .attr("y", "97%")
       .attr("font-size", "0.8em")
       .attr("font-family", "Gaegu, sans-serif");
@@ -552,7 +552,7 @@ function callback (error, data) {
 
       data.forEach(function(row, index){
       locSvg.append("rect")
-        .attr("width", xLocScale(row['count'])-loc_padding +2)//without the +1 some thnigs have nothing
+        .attr("width", xLocScale(row['count'])-loc_padding+2)//without the +1 some thnigs have nothing
         .attr("height", 10)
         .attr("x", loc_padding)
         .attr("y", loc_height - yLocScale(index));
@@ -573,14 +573,14 @@ function callback (error, data) {
     var xCharScale = d3.scaleLinear();
     var yCharScale = d3.scaleLinear();
 
-    var xCharAxis = d3.axisBottom();
+    var xCharAxis = d3.axisBottom().ticks(5);
     var yCharAxis = d3.axisLeft().ticks(0);
 
     var xCharExtent = d3.extent(data, function(d) { return d.count; });
 
     xCharScale
     .domain(xCharExtent)
-    .range([char_padding,char_width-char_padding]);
+    .range([char_padding,char_width/1.5]);
 
     yCharScale
     .domain([0, data.length])
@@ -614,7 +614,7 @@ function callback (error, data) {
     charSvg.selectAll("#chartext").remove();
     data.forEach(function(row, index){
       charSvg.append("rect")
-        .attr("width", xCharScale(row['count'])-char_padding +2)//without the +1 some thnigs have nothing
+        .attr("width", xCharScale(row['count'])-char_padding+2)//without the +1 some thnigs have nothing
         .attr("height", 10)
         .attr("x", char_padding)
         .attr("y", char_height - yCharScale(index));
@@ -636,14 +636,14 @@ function callback (error, data) {
     var xLocScale = d3.scaleLinear();
     var yLocScale = d3.scaleLinear();
 
-    var xLocAxis = d3.axisBottom();
+    var xLocAxis = d3.axisBottom().ticks(5);
     var yLocAxis = d3.axisLeft().ticks(0);
 
     var xLocExtent = d3.extent(data, function(d) { return d.count; });
 
     xLocScale
     .domain(xLocExtent)
-    .range([loc_padding,loc_width-loc_padding]);
+    .range([loc_padding,loc_width/1.5]);
 
     yLocScale
     .domain([0, data.length])
@@ -677,7 +677,7 @@ function callback (error, data) {
     locSvg.selectAll("#loctext").remove();
     data.forEach(function(row, index){
       locSvg.append("rect")
-        .attr("width", xLocScale(row['count'])-loc_padding +2)//without the +1 some thnigs have nothing
+        .attr("width", xLocScale(row['count'])-loc_padding+2)//without the +1 some thnigs have nothing
         .attr("height", 10)
         .attr("x", loc_padding)
         .attr("y", loc_height - yLocScale(index));

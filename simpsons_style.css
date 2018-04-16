@@ -134,16 +134,16 @@ div {
 }
 
 .ep-location-div {
-  /*border: 1px solid black;*/
-  width: 45%;
+  border: 1px solid black;
+  width: 47%;
   float: right;
   margin-right: 2%;
   text-align: center;
 }
 
 .ep-character-div {
-  /*border: 1px solid black;*/
-  width: 45%;
+  border: 1px solid black;
+  width: 47%;
   float: left;
   margin-left: 2%;
   text-align: center;
