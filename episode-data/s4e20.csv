@@ -18,8 +18,8 @@ name,count
 "Barney Gumble",3
 "Guide",3
 "Richard Nixon",2
-"Scientist #2",2
 "Hitler",2
+"Scientist #2",2
 "Recruiter",2
 "Actor",2
 "Rev. Timothy Lovejoy",2
@@ -32,7 +32,6 @@ name,count
 "Lunchlady Doris",1
 "Scientist #1",1
 "Evil Homer",1
-"Young Grampa",1
 "Security Guard",1
 "Apu Nahasapeemapetilon",1
 "Chief Wiggum",1
@@ -46,3 +45,4 @@ name,count
 "Crowd",1
 "Woman",1
 "Man",1
+"Young Grampa",1

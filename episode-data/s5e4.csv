@@ -19,7 +19,9 @@ name,count
 "Jimbo Jones",2
 "Mob",2
 "Burns' Mother",1
+"Charlie",1
 "George Burns",1
+"Carl Carlson",1
 "Goon",1
 "Jimmy Carter",1
 "George H.W. Bush",1
@@ -35,12 +37,10 @@ name,count
 "Explorer",1
 "Bear",1
 "Voice",1
+"Hooded Man",1
 "Grampa Simpson",1
 "Workman",1
 "Workman #2",1
-"Hooded Man",1
-"Charlie",1
-"Carl Carlson",1
 "Dinosaur",1
 "Host",1
 "Otto Mann",1

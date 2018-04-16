@@ -8,8 +8,8 @@ name,count
 "Chief Wiggum",9
 "The Rich Texan",6
 "Seymour Skinner",5
-"Rev. Timothy Lovejoy",4
 "Professor Jonathan Frink",4
+"Rev. Timothy Lovejoy",4
 "Moe Szyslak",4
 "Dr. Julius Hibbert",3
 "King David",3
@@ -30,6 +30,7 @@ name,count
 "Milhouse Van Houten",1
 "Todd Flanders",1
 "Krusty the Clown",1
+"Captain Horatio McCallister",1
 "Mayor Joe Quimby",1
 "Ralph Wiggum",1
 "Carl Carlson",1
@@ -37,7 +38,6 @@ name,count
 "Apu Nahasapeemapetilon",1
 "Louie",1
 "Sideshow Mel",1
-"Captain Horatio McCallister",1
 "St. Peter",1
 "Frank Sinatra",1
 "Captain Kirk",1

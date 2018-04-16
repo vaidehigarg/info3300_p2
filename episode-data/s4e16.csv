@@ -9,8 +9,8 @@ name,count
 "Chief Wiggum",8
 "Rev. Timothy Lovejoy",5
 "Moe Szyslak",5
-"Homer's Brain",4
 "Ned Flanders",4
+"Homer's Brain",4
 "Eddie",3
 "Wiseguy",3
 "Chuck's Dad",3
@@ -34,14 +34,12 @@ name,count
 "Mrs. Phillips",1
 "Guard",1
 "Troy McClure",1
-"TROY",1
 "Jasper Beardly",1
 "Assembly",1
 "Otto Mann",1
 "Hans Moleman",1
 "Milhouse Van Houten",1
 "Martin Prince",1
-"Lisa's Thoughts",1
 "Parent One",1
 "Parent Two",1
 "Feminists",1
@@ -49,3 +47,5 @@ name,count
 "Guy #2",1
 "Baseball Announcer",1
 "Train",1
+"TROY",1
+"Lisa's Thoughts",1

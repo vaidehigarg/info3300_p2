@@ -26,12 +26,11 @@ name,count
 "Mayor Joe Quimby",2
 "Dr. Julius Hibbert",2
 "Captain Horatio McCallister",2
+"Executive #3",1
 "Miss Hoover",1
 "Executive #1",1
 "Executive #2",1
-"Executive #3",1
 "Prendergast",1
-"Homer's Brain",1
 "Lenny Leonard",1
 "Guillermo",1
 "Voice",1
@@ -40,6 +39,7 @@ name,count
 "Nelson's Parrot",1
 "Female Inspector",1
 "Other Old People",1
+"Patty Bouvier",1
 "Imaginary Burns #1",1
 "Imaginary Burns #2",1
 "Imaginary Burns #3",1
@@ -51,4 +51,4 @@ name,count
 "Snake Jailbird",1
 "Carl Carlson",1
 "Jimbo Jones",1
-"Patty Bouvier",1
+"Homer's Brain",1

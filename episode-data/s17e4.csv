@@ -18,8 +18,8 @@ name,count
 "Blue-Haired Lawyer",3
 "Apu Nahasapeemapetilon",3
 "TV Announcer",3
-"Nelson Muntz",3
 "Grampa Gorilla",3
+"Nelson Muntz",3
 "Einstein Lisa",3
 "Moe Pacifier",3
 "Robot",2
@@ -28,7 +28,6 @@ name,count
 "Dennis Rodman Pacifier",2
 "Selma Bouvier",1
 "Patty Bouvier",1
-"Bart's Thoughts",1
 "Female Robot",1
 "Silver-haired Priest",1
 "Barney Gumble",1
@@ -50,3 +49,4 @@ name,count
 "Chief Wiggum",1
 "Apu Robot",1
 "Lenny Pacifier",1
+"Bart's Thoughts",1

@@ -25,7 +25,7 @@ var episode = 1;
 
 /* import data */
 d3.queue()
-.defer(d3.csv, "mod-data/simpsons_episodes.csv", parseRow)
+.defer(d3.csv, "data-cleaning/mod-data/simpsons_episodes.csv", parseRow)
 .await(callback);
 
 var parseRow = function (row) {
@@ -470,7 +470,8 @@ function callback (error, data) {
         .attr("width", xCharScale(row['count'])-char_padding+2)//without the +1 some thnigs have nothing
         .attr("height", 10)
         .attr("x", char_padding)
-        .attr("y", char_height - yCharScale(index));
+        .attr("y", char_height - yCharScale(index))
+        .attr("fill", "rgb(232,70,28)");
       charSvg.append("text")
         .attr("font-size", "0.6em")
         .attr("font-family", "Gaegu, sans-serif")
@@ -498,7 +499,7 @@ function callback (error, data) {
 
     xLocScale
     .domain(xLocExtent)
-    .range([loc_padding,loc_width/1.5]);
+    .range([loc_padding,loc_width/2]);
 
     yLocScale
     .domain([0, data.length])
@@ -535,7 +536,7 @@ function callback (error, data) {
     locSvg.append("text")
       .text("# Spoken Lines")
       .style("text-anchor", "middle")
-      .attr("x", "40%")
+      .attr("x", "30%")
       .attr("y", "97%")
       .attr("font-size", "0.8em")
       .attr("font-family", "Gaegu, sans-serif");
@@ -555,7 +556,8 @@ function callback (error, data) {
         .attr("width", xLocScale(row['count'])-loc_padding+2)//without the +1 some thnigs have nothing
         .attr("height", 10)
         .attr("x", loc_padding)
-        .attr("y", loc_height - yLocScale(index));
+        .attr("y", loc_height - yLocScale(index))
+        .attr("fill", "rgb(30,103,180)");
       locSvg.append("text")
         .attr("font-size", "0.6em")
         .attr("font-family", "Gaegu, sans-serif")
@@ -617,7 +619,8 @@ function callback (error, data) {
         .attr("width", xCharScale(row['count'])-char_padding+2)//without the +1 some thnigs have nothing
         .attr("height", 10)
         .attr("x", char_padding)
-        .attr("y", char_height - yCharScale(index));
+        .attr("y", char_height - yCharScale(index))
+        .attr("fill", "rgb(232,70,28)");
       charSvg.append("text")
         .attr("font-size", "0.6em")
         .attr("font-family", "Gaegu, sans-serif")
@@ -643,7 +646,7 @@ function callback (error, data) {
 
     xLocScale
     .domain(xLocExtent)
-    .range([loc_padding,loc_width/1.5]);
+    .range([loc_padding,loc_width/2]);
 
     yLocScale
     .domain([0, data.length])
@@ -680,7 +683,8 @@ function callback (error, data) {
         .attr("width", xLocScale(row['count'])-loc_padding+2)//without the +1 some thnigs have nothing
         .attr("height", 10)
         .attr("x", loc_padding)
-        .attr("y", loc_height - yLocScale(index));
+        .attr("y", loc_height - yLocScale(index))
+        .attr("fill", "rgb(30,103,180)");
       locSvg.append("text")
         .attr("font-size", "0.6em")
         .attr("font-family", "Gaegu, sans-serif")

@@ -1,7 +1,7 @@
 name,count
 "Homer Simpson",75
-"Patty Bouvier",25
 "Bart Simpson",25
+"Patty Bouvier",25
 "Marge Simpson",23
 "Selma Bouvier",18
 "Lisa Simpson",9
@@ -26,5 +26,5 @@ name,count
 "Lewis Clark",1
 "Ralph Wiggum",1
 "Narrator",1
-"Bart's Thoughts",1
 "Kearney Zzyzwicz",1
+"Bart's Thoughts",1
