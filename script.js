@@ -397,7 +397,7 @@ function callback (error, data) {
   }
 
   function character_callback(error, data) {
-    console.log(data);
+    data = data.slice(0, 25);
 
     char_width = 600;
     char_height = 600;
@@ -472,13 +472,13 @@ function callback (error, data) {
         .attr("x", char_padding)
         .attr("y", char_height - yCharScale(index));
       charSvg.append("text")
-        .attr("font-size", "0.7em")
+        .attr("font-size", "0.6em")
         .attr("font-family", "Gaegu, sans-serif")
         .text(row['name'])
-        .attr("x", xCharScale(row['count']) +1)
+        .attr("x", xCharScale(row['count'])+5)
         .attr("y", char_height - yCharScale(index)+10)
         .attr("id", "chartext");
-    });
+      });
   }
 
   function location_callback(error, data) {
@@ -549,6 +549,21 @@ function callback (error, data) {
       .attr("transform", "rotate (" + 270 + "," + loc_padding/2.5 + "," + loc_height/2 + ")")
       .style("font-size", "0.8em")
       .style("font-family", "Gaegu, sans-serif");
+
+      data.forEach(function(row, index){
+      locSvg.append("rect")
+        .attr("width", xLocScale(row['count'])-loc_padding +2)//without the +1 some thnigs have nothing
+        .attr("height", 10)
+        .attr("x", loc_padding)
+        .attr("y", loc_height - yLocScale(index));
+      locSvg.append("text")
+        .attr("font-size", "0.6em")
+        .attr("font-family", "Gaegu, sans-serif")
+        .text(row['name'])
+        .attr("x", xLocScale(row['count'])+5)
+        .attr("y", loc_height - yLocScale(index)+10)
+        .attr("id", "loctext");
+      });
   }
 
   function character_update(error, data) {
@@ -595,7 +610,6 @@ function callback (error, data) {
 
     y.merge(newY).transition(t).call(yCharAxis);
 
-    console.log(data);
     charSvg.selectAll("rect").remove();
     charSvg.selectAll("#chartext").remove();
     data.forEach(function(row, index){
@@ -605,10 +619,10 @@ function callback (error, data) {
         .attr("x", char_padding)
         .attr("y", char_height - yCharScale(index));
       charSvg.append("text")
-        .attr("font-size", "0.7em")
+        .attr("font-size", "0.6em")
         .attr("font-family", "Gaegu, sans-serif")
         .text(row['name'])
-        .attr("x", xCharScale(row['count']) +1)
+        .attr("x", xCharScale(row['count'])+5)
         .attr("y", char_height - yCharScale(index)+10)
         .attr("id", "chartext");
     });
@@ -616,6 +630,9 @@ function callback (error, data) {
   }
 
   function location_update(error, data) {
+
+    data = data.slice(0, 25);
+
     var xLocScale = d3.scaleLinear();
     var yLocScale = d3.scaleLinear();
 
@@ -655,5 +672,23 @@ function callback (error, data) {
     .attr("transform", "translate(" + loc_padding + "," + 0 + ")");
 
     y.merge(newY).transition(t).call(yLocAxis);
+
+    locSvg.selectAll("rect").remove();
+    locSvg.selectAll("#loctext").remove();
+    data.forEach(function(row, index){
+      locSvg.append("rect")
+        .attr("width", xLocScale(row['count'])-loc_padding +2)//without the +1 some thnigs have nothing
+        .attr("height", 10)
+        .attr("x", loc_padding)
+        .attr("y", loc_height - yLocScale(index));
+      locSvg.append("text")
+        .attr("font-size", "0.6em")
+        .attr("font-family", "Gaegu, sans-serif")
+        .text(row['name'])
+        .attr("x", xLocScale(row['count'])+5)
+        .attr("y", loc_height - yLocScale(index)+10)
+        .attr("id", "loctext");
+      });
+
   }
 } // end callback
