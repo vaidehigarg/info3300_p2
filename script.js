@@ -407,7 +407,7 @@ function callback (error, data) {
     var yCharScale = d3.scaleLinear();
 
     var xCharAxis = d3.axisBottom();
-    var yCharAxis = d3.axisLeft();
+    var yCharAxis = d3.axisLeft().ticks(0);
 
     var xCharExtent = d3.extent(data, function(d) { return d.count; });
 
@@ -492,7 +492,7 @@ function callback (error, data) {
     var yLocScale = d3.scaleLinear();
 
     var xLocAxis = d3.axisBottom();
-    var yLocAxis = d3.axisLeft();
+    var yLocAxis = d3.axisLeft().ticks(0);
 
     var xLocExtent = d3.extent(data, function(d) { return d.count; });
 
@@ -574,7 +574,7 @@ function callback (error, data) {
     var yCharScale = d3.scaleLinear();
 
     var xCharAxis = d3.axisBottom();
-    var yCharAxis = d3.axisLeft();
+    var yCharAxis = d3.axisLeft().ticks(0);
 
     var xCharExtent = d3.extent(data, function(d) { return d.count; });
 
@@ -637,7 +637,7 @@ function callback (error, data) {
     var yLocScale = d3.scaleLinear();
 
     var xLocAxis = d3.axisBottom();
-    var yLocAxis = d3.axisLeft();
+    var yLocAxis = d3.axisLeft().ticks(0);
 
     var xLocExtent = d3.extent(data, function(d) { return d.count; });
 
