@@ -50,8 +50,6 @@ function episode_callback (data) {
   episodes.forEach(function(season, season_index) {
     season.forEach(function(episode, episode_index) {
       episode["num_lines"] = 0;
-      episode["num_male"] = 0;
-      episode["num_female"] = 0;
       episode["characters"] = [];
       episode["locations"] = [];
     });
@@ -182,24 +180,24 @@ function script_callback (data) {
         char_files.push(exportToCsvFile(csv_data, filename));
       }
 
-      // if (episode.location_data.length != 0) {
-      //   var location_json = sortResults(episode.location_data, "count", false);
-      //   // console.log(location_json);
-      //   var fields = Object.keys(location_json[0]);
-      //   // console.log(fields);
-      //   var replacer = function(key, value) { return value === null ? '' : value } 
-      //   var csv = location_json.map(function(row){
-      //     return fields.map(function(fieldName){
-      //       return JSON.stringify(row[fieldName], replacer)
-      //     }).join(',');
-      //   });
-      //   csv.unshift(fields.join(',')); // add header column
-      //   csv_data = csv.join('\r\n');
-      //   filename = "s" + (season_index+1) + "e" + (episode_index+1) + "-loc";
-      //   console.log(filename);
-      //   console.log(csv_data);
-      //   loc_files.push(exportToCsvFile(csv_data, filename));
-      // }
+      if (episode.location_data.length != 0) {
+        var location_json = sortResults(episode.location_data, "count", false);
+        // console.log(location_json);
+        var fields = Object.keys(location_json[0]);
+        // console.log(fields);
+        var replacer = function(key, value) { return value === null ? '' : value } 
+        var csv = location_json.map(function(row){
+          return fields.map(function(fieldName){
+            return JSON.stringify(row[fieldName], replacer)
+          }).join(',');
+        });
+        csv.unshift(fields.join(',')); // add header column
+        csv_data = csv.join('\r\n');
+        filename = "s" + (season_index+1) + "e" + (episode_index+1) + "-loc";
+        console.log(filename);
+        console.log(csv_data);
+        loc_files.push(exportToCsvFile(csv_data, filename));
+      }
     });
   });
   // console.log(files);
